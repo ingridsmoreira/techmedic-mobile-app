@@ -1,19 +1,21 @@
-<header
-  style="
-    background-image: url('assets/images/bgs/header.svg');
-    background-size: cover;
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-  "
->
+<header class="header">
   <div class="foto-perfil-wrapper">
     <img
       src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29uYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
       alt="Ball Image"
     />
+  </div>
+  <div class="header-menu-wrapper">
+    <a href="#" class="header-menu__item">
+      <mat-icon class="icone">events</mat-icon>
+    </a>
+    <a href="#" class="header-menu__item">
+      <mat-icon class="icone">notifications</mat-icon>
+    </a>
+  </div>
+  <div class="welcome-wrapper">
+    <h2>Olá, ITAQUAQUECETUBA</h2>
+    <p>Bem-vindo(a) ao TECHMEDIC</p>
   </div>
   <div class="busca-wrapper">
     <app-busca></app-busca>

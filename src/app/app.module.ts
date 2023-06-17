@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
 import { LibModule } from './lib/lib.module';
+import { StateModule } from './core/state/state.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,6 +17,7 @@ import { LibModule } from './lib/lib.module';
     SharedModule,
     FeaturesModule,
     LibModule,
+    StateModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

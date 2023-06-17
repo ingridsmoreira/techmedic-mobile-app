@@ -1,0 +1,16 @@
+{
+  "users": [
+    {
+      "username": "teste@teste.com",
+      "nome": "Itaquaquecetuba Teste",
+      "senha": "698dc19d489c4e4db73e28a713eab07b",
+      "userId": "1",
+      "numero": "99999999",
+      "photoUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29uYXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
+    }
+  ],
+  "medico": [],
+  "notificacoes": [],
+  "msgs": [],
+  "calendario": []
+}
