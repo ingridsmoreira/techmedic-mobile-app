@@ -8,6 +8,8 @@ import { BackBtnModule } from './back-btn/back-btn.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FooterMenuModule } from './footer-menu/footer-menu.module';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
+import { EspecialidadesModule } from './especialidades/especialidades.module';
+import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas.module';
 
 @NgModule({
   declarations: [],
@@ -21,6 +23,8 @@ import { HeaderMenuModule } from './header-menu/header-menu.module';
     ReactiveFormsModule,
     FooterMenuModule,
     HeaderMenuModule,
+    EspecialidadesModule,
+    ProximasConsultasModule,
   ],
   exports: [
     InputFieldModule,
@@ -29,6 +33,8 @@ import { HeaderMenuModule } from './header-menu/header-menu.module';
     ReactiveFormsModule,
     FooterMenuModule,
     HeaderMenuModule,
+    EspecialidadesModule,
+    ProximasConsultasModule,
   ],
 })
 export class SharedModule {}
