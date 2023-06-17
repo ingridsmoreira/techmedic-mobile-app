@@ -1,4 +1,6 @@
 <div class="proximas-consultas-wrapper">
   <h3>Proximas consultas</h3>
-  <app-card-medico></app-card-medico>
+  <div *ngFor="let cardMedico of consultas" class="consultas">
+    <app-card-medico [cardMedico]="cardMedico"></app-card-medico>
+  </div>
 </div>
