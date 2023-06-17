@@ -10,9 +10,9 @@ import { FooterMenuModule } from './footer-menu/footer-menu.module';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { EspecialidadesModule } from './especialidades/especialidades.module';
 import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas.module';
+import { NotificacaoModule } from './notificacao/notificacao.module';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     InputFieldModule,
@@ -25,6 +25,7 @@ import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas
     HeaderMenuModule,
     EspecialidadesModule,
     ProximasConsultasModule,
+    NotificacaoModule,
   ],
   exports: [
     InputFieldModule,
@@ -35,6 +36,7 @@ import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas
     HeaderMenuModule,
     EspecialidadesModule,
     ProximasConsultasModule,
+    NotificacaoModule,
   ],
 })
 export class SharedModule {}

@@ -4,6 +4,8 @@ import { SplashComponent } from './features/splash/splash.component';
 import { WelcomeComponent } from './features/welcome/welcome.component';
 import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
+import { NotificacoesComponent } from './features/notificacoes/notificacoes.component';
+import { SemInternetComponent } from './features/sem-internet/sem-internet.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -25,6 +27,16 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'notificacoes',
+    component: NotificacoesComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'sem-internet',
+    component: SemInternetComponent,
     pathMatch: 'full',
   },
 ];

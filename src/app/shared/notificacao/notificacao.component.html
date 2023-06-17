@@ -1,0 +1,18 @@
+<div *ngIf="notificacao" class="notificacao-und">
+  <mat-icon *ngIf="notificacao.vista" class="icone-notificao">{{
+    notificacao.icone
+  }}</mat-icon>
+  <mat-icon
+    *ngIf="!notificacao.vista"
+    class="icone-notificao"
+    matBadge="1"
+    matBadgeSize="small"
+    matBadgeColor="warn"
+    >{{ notificacao.icone }}</mat-icon
+  >
+  <div class="conteudo">
+    <span class="msg">{{ notificacao.mensagem }}</span
+    ><br />
+    <span class="hora">{{ trataHora() }}</span>
+  </div>
+</div>

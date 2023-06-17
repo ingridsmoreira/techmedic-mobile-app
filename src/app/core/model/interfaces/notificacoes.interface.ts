@@ -1,9 +1,8 @@
 export interface Notificacoes {
   id: number;
   userId: number;
-  vizualida: boolean;
+  vista: boolean;
   mensagem: string;
-  tipo: string;
+  icone: string;
   data: Date;
-  hora: string;
 }

@@ -1,0 +1,13 @@
+<div class="notificacoes-container">
+  <app-back-btn></app-back-btn>
+  <h2>Notificações</h2>
+  <a class="deletar-notificacoes" (click)="apagarNotificacoes()"
+    >Apagar notificações</a
+  >
+  <div class="notificacoes">
+    <div class="notificacao" *ngFor="let notificacao of notificacoes">
+      <hr />
+      <app-notificacao [notificacao]="notificacao"></app-notificacao>
+    </div>
+  </div>
+</div>
