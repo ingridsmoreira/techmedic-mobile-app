@@ -1,0 +1,85 @@
+<ng-container *ngIf="design === 'basic'">
+  <button
+    class="default-btn"
+    mat-button
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    <mat-icon class="big-btn-icon" matPrefix *ngIf="icon">{{ icon }}</mat-icon>
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'raised'">
+  <button
+    class="default-btn"
+    mat-raised-button
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    <mat-icon class="big-btn-icon" matPrefix *ngIf="icon">{{ icon }}</mat-icon>
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'stroked'">
+  <button
+    class="default-btn"
+    mat-stroked-button
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    <mat-icon class="big-btn-icon" matPrefix *ngIf="icon">{{ icon }}</mat-icon>
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'flat'">
+  <button
+    class="default-btn"
+    mat-flat-button
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    <mat-icon class="big-btn-icon" matPrefix *ngIf="icon">{{ icon }}</mat-icon>
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'icon'">
+  <button
+    mat-icon-button
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'fab'">
+  <button
+    mat-fab
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    {{ text }}
+  </button>
+</ng-container>
+<ng-container *ngIf="design === 'mini-fab'">
+  <button
+    mat-mini-fab
+    [color]="color"
+    [ngClass]="customClass"
+    (click)="onClick.emit()"
+    [disabled]="disabled"
+  >
+    {{ text }}
+  </button>
+</ng-container>

@@ -1,0 +1,13 @@
+<div class="login-container">
+  <app-back-btn></app-back-btn>
+  <h1>Bem-vindo(a) de volta!</h1>
+  <app-core-login (onLoginEvent)="onLoginClick($event)"></app-core-login>
+  <div class="outra-opcao">
+    <app-button
+      text="Não tem uma conta? Inscrever-se"
+      design="basic"
+      icon="arrow_back_ios"
+      (click)="onCadastroClick()"
+    ></app-button>
+  </div>
+</div>

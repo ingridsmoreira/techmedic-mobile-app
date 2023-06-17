@@ -1,0 +1,18 @@
+<mat-form-field
+  class="default-input"
+  [ngClass]="isRedondo ? 'redondo' : ''"
+  [appearance]="appearance"
+>
+  <mat-icon matPrefix *ngIf="icon && iconFrente">{{ icon }}</mat-icon>
+  <mat-label>{{ label }}</mat-label>
+  <input
+    matInput
+    [type]="type"
+    [placeholder]="placeholder"
+    [required]="required"
+    [value]="value"
+    (input)="onInput($event)"
+    (blur)="onTouched()"
+  />
+  <mat-icon matSuffix *ngIf="icon && !iconFrente">{{ icon }}</mat-icon>
+</mat-form-field>

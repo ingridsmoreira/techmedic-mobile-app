@@ -1,0 +1,29 @@
+<div class="welcome-container">
+  <div class="welcome-img">
+    <img src="/assets/images/welcome.svg" alt="Welcome" />
+  </div>
+  <div class="welcome-txt">
+    <h1 class="welcome-txt1">Bem-vindo(a) ao TECHMEDIC</h1>
+    <p class="welcome-txt2">
+      Precisando de ajuda medica ou marcar uma consulta?
+    </p>
+  </div>
+  <div class="welcome-btn">
+    <app-button text="CRIAR CONTA COM EMAIL"></app-button>
+    <app-button
+      text="ACESSAR COM FACEBOOK"
+      color="basic"
+      icon="facebook_colorido"
+    ></app-button>
+    <app-button
+      text="ACESSAR COM GMAIL"
+      color="basic"
+      icon="google_colorido"
+    ></app-button>
+    <app-button
+      text="ACESSAR"
+      design="basic"
+      (click)="onLoginClick()"
+    ></app-button>
+  </div>
+</div>

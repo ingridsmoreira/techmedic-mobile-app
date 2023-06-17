@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">techmedic-mobile-app</string>
+    <string name="title_activity_main">techmedic-mobile-app</string>
+    <string name="package_name">puc.minas.ingrid.techmedic</string>
+    <string name="custom_url_scheme">puc.minas.ingrid.techmedic</string>
+</resources>
