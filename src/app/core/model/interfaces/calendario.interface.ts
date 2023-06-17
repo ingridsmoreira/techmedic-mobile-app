@@ -5,14 +5,3 @@ export interface Calendario {
   data: Date;
   hora: string;
 }
-
-export interface CalendarioConsulta {
-  calendarioId: number;
-  medicoId: number;
-  medicoSexo: string;
-  medicoNome: string;
-  medicoEspecialidade: string;
-  medicoPhotoUrl: string;
-  data: Date;
-  hora: string;
-}

@@ -1,20 +1,31 @@
-<mat-card class="example-card">
-  <mat-card-header>
+<mat-card class="medico-card">
+  <mat-card-header class="medico-header">
     <div mat-card-avatar class="medico-avatar">
       <img
         mat-card-image
-        src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-        alt="Photo of a Shiba Inu"
+        [src]="cardMedico.medicoPhotoUrl"
+        [alt]="cardMedico.medicoNome"
       />
     </div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <div class="title-wrapper">
+      <mat-card-title class="medico-title"
+        >{{ cardMedico.medicoSexo === "M" ? "Dr. " : "Dra. "
+        }}{{ cardMedico.medicoNome }}</mat-card-title
+      >
+      <mat-card-subtitle>{{ getEspecialidadeStr() }}</mat-card-subtitle>
+    </div>
+    <div *ngIf="cardMedico.tipo === 'calendario'" class="calendario">
+      <div class="icone-wrapper">
+        <mat-icon class="icone">event</mat-icon>
+      </div>
+      <span class="agendamento">{{ getHoraConsulta() }}</span>
+    </div>
   </mat-card-header>
-  <mat-card-content>
+  <!-- <mat-card-content>
     <p>
       The Shiba Inu is the smallest of the six original and distinct spitz
       breeds of dog from Japan. A small, agile dog that copes very well with
       mountainous terrain, the Shiba Inu was originally bred for hunting.
     </p>
-  </mat-card-content>
+  </mat-card-content> -->
 </mat-card>

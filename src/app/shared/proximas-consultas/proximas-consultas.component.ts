@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CalendarioConsulta } from 'src/app/core/model/interfaces/calendario.interface';
+import { CardMedico } from 'src/app/core/model/interfaces/medico.interface';
 
 @Component({
   selector: 'app-proximas-consultas',
@@ -7,5 +7,5 @@ import { CalendarioConsulta } from 'src/app/core/model/interfaces/calendario.int
   styleUrls: ['./proximas-consultas.component.sass'],
 })
 export class ProximasConsultasComponent {
-  consultas: CalendarioConsulta[] = [];
+  consultas: CardMedico[] = [];
 }
