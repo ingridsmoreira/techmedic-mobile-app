@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../objetos/model/user.interface';
+import { User } from '../../model/interfaces/user.interface';
 
 export const getUser = createAction('[User] Get user', props<{ user: any }>());
 export const login = createAction('[User] Login', props<{ user: any }>());
