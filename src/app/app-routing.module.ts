@@ -6,6 +6,8 @@ import { LoginComponent } from './features/login/login.component';
 import { HomeComponent } from './features/home/home.component';
 import { NotificacoesComponent } from './features/notificacoes/notificacoes.component';
 import { SemInternetComponent } from './features/sem-internet/sem-internet.component';
+import { CalendarioComponent } from './features/calendario/calendario.component';
+import { BuscaComponent } from './features/busca/busca.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -37,6 +39,16 @@ const routes: Routes = [
   {
     path: 'sem-internet',
     component: SemInternetComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'calendario',
+    component: CalendarioComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'busca',
+    component: BuscaComponent,
     pathMatch: 'full',
   },
 ];

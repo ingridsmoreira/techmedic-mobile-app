@@ -1,0 +1,9 @@
+<div class="busca-res-wrapper">
+  <h3>Resultado da busca por especidalidades</h3>
+  <div *ngFor="let cardMedico of medicos" class="consultas">
+    <app-card-medico [cardMedico]="cardMedico"></app-card-medico>
+  </div>
+  <div *ngIf="medicos.length === 0" class="no-consultas">
+    <h4>Nāo existe resultados para sua busca</h4>
+  </div>
+</div>

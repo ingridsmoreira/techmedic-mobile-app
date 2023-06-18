@@ -9,8 +9,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FooterMenuModule } from './footer-menu/footer-menu.module';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { EspecialidadesModule } from './especialidades/especialidades.module';
-import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas.module';
+import { ProximasConsultasModule } from '../lib/proximas-consultas/proximas-consultas.module';
 import { NotificacaoModule } from './notificacao/notificacao.module';
+import { CardMedicoModule } from './card-medico/card-medico.module';
 
 @NgModule({
   imports: [
@@ -24,8 +25,8 @@ import { NotificacaoModule } from './notificacao/notificacao.module';
     FooterMenuModule,
     HeaderMenuModule,
     EspecialidadesModule,
-    ProximasConsultasModule,
     NotificacaoModule,
+    CardMedicoModule,
   ],
   exports: [
     InputFieldModule,
@@ -35,8 +36,8 @@ import { NotificacaoModule } from './notificacao/notificacao.module';
     FooterMenuModule,
     HeaderMenuModule,
     EspecialidadesModule,
-    ProximasConsultasModule,
     NotificacaoModule,
+    CardMedicoModule,
   ],
 })
 export class SharedModule {}

@@ -6,6 +6,9 @@ import { LoginModule } from './login/login.module';
 import { HomeModule } from './home/home.module';
 import { NotificacoesModule } from './notificacoes/notificacoes.module';
 import { SemInternetModule } from './sem-internet/sem-internet.module';
+import { CalendarioModule } from './calendario/calendario.module';
+import { BuscaModule } from './busca/busca.module';
+import { MedicoModule } from './medico/medico.module';
 
 @NgModule({
   declarations: [],
@@ -17,6 +20,9 @@ import { SemInternetModule } from './sem-internet/sem-internet.module';
     HomeModule,
     NotificacoesModule,
     SemInternetModule,
+    CalendarioModule,
+    BuscaModule,
+    MedicoModule,
   ],
 })
 export class FeaturesModule {}

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
+import { CalendarioComponent } from './calendario.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LibModule } from 'src/app/lib/lib.module';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [CalendarioComponent],
   imports: [CommonModule, SharedModule, LibModule],
-  exports: [HomeComponent],
+  exports: [CalendarioComponent],
 })
-export class HomeModule {}
+export class CalendarioModule {}

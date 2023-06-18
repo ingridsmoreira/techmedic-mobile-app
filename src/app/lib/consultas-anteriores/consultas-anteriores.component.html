@@ -1,0 +1,9 @@
+<div class="consultas-anteriores-wrapper">
+  <h3>Consultas anteriores</h3>
+  <div *ngFor="let cardMedico of consultas" class="consultas">
+    <app-card-medico [cardMedico]="cardMedico"></app-card-medico>
+  </div>
+  <div *ngIf="consultas.length === 0" class="no-consultas">
+    <h4>Nāo existem consultas anteriores</h4>
+  </div>
+</div>

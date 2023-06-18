@@ -3,4 +3,7 @@
   <div *ngFor="let cardMedico of consultas" class="consultas">
     <app-card-medico [cardMedico]="cardMedico"></app-card-medico>
   </div>
+  <div *ngIf="consultas.length === 0" class="no-consultas">
+    <h4>Nāo existem consultas próximas</h4>
+  </div>
 </div>

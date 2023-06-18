@@ -1,14 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { cardMedico } from 'src/app/core/model/enum/cardMedico';
 import { Especialidades } from 'src/app/core/model/enum/especialidades';
 import { CardMedico } from 'src/app/core/model/interfaces/medico.interface';
 
 @Component({
-  selector: 'app-proximas-consultas',
-  templateUrl: './proximas-consultas.component.html',
-  styleUrls: ['./proximas-consultas.component.sass'],
+  selector: 'app-busca-res',
+  templateUrl: './busca-res.component.html',
+  styleUrls: ['./busca-res.component.sass'],
 })
-export class ProximasConsultasComponent {
+export class BuscaResComponent {
   dummyCardMedico: CardMedico[] = [
     {
       medicoId: 1,
@@ -17,21 +17,17 @@ export class ProximasConsultasComponent {
       medicoEspecialidade: Especialidades.Geral,
       medicoPhotoUrl:
         'https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?w=996&t=st=1687023610~exp=1687024210~hmac=b8bd5979930214f754b2250664900f96b6a0125107c2836a2a341350be013487',
-      data: new Date(),
-      hora: '08:00',
-      tipo: cardMedico.calendario,
+      tipo: cardMedico.busca,
     },
     {
       medicoId: 2,
       medicoSexo: 'F',
       medicoNome: 'testando de Tal',
-      medicoEspecialidade: Especialidades.Pediatra,
+      medicoEspecialidade: Especialidades.Geral,
       medicoPhotoUrl:
         'https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?w=996&t=st=1687023610~exp=1687024210~hmac=b8bd5979930214f754b2250664900f96b6a0125107c2836a2a341350be013487',
-      data: new Date(),
-      hora: '09:00',
-      tipo: cardMedico.calendario,
+      tipo: cardMedico.busca,
     },
   ];
-  @Input() consultas: CardMedico[] = this.dummyCardMedico;
+  medicos: CardMedico[] = this.dummyCardMedico;
 }
