@@ -1,5 +1,23 @@
 <div class="medico-container">
   <app-back-btn></app-back-btn>
-  <h2>Informacoes do especialista</h2>
-  <hr />
+  <h2>Informações profissionais</h2>
+  <div *ngIf="medicoLoaded | async">
+    <hr />
+    <div class="dados-medico">
+      <div class="foto-perfil-wrapper">
+        <img src="{{ medico.photoUrl }}" />
+      </div>
+
+      <div class="titulo-wrapper">
+        <h3>{{ medico.sexo === "M" ? "Dr. " : "Dra. " }}{{ medico.nome }}</h3>
+        <p>{{ getEspecialidadeStr() }}</p>
+      </div>
+
+      <div class="desc-wrapper">
+        <h3>Descriçāo:</h3>
+        <p>{{ medico.descricao }}</p>
+      </div>
+      <app-agenda-medico [medicoId]="medico.id"></app-agenda-medico>
+    </div>
+  </div>
 </div>

@@ -1,21 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Especialidades } from 'src/app/core/model/enum/especialidades';
 import { Medico } from 'src/app/core/model/interfaces/medico.interface';
+import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'app-medico',
   templateUrl: './medico.component.html',
   styleUrls: ['./medico.component.sass'],
 })
-export class MedicoComponent {
-  dummyMedico: Medico = {
-    medicoId: 1,
-    sexo: 'M',
-    nome: 'Fulano de Tal',
-    especialidade: Especialidades.Geral,
-    photoUrl:
-      'https://img.freepik.com/free-photo/woman-doctor-wearing-lab-coat-with-stethoscope-isolated_1303-29791.jpg?w=996&t=st=1687023610~exp=1687024210~hmac=b8bd5979930214f754b2250664900f96b6a0125107c2836a2a341350be013487',
-    descricao:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut aliquam sed purus id sagittis. Maecenas porta ipsum a ullamcorper porttitor. Nunc fringilla turpis non eros hendrerit, ut volutpat odio eleifend. Cras fermentum ante nisi, quis facilisis ligula fringilla et. Maecenas.',
-  };
+export class MedicoComponent implements OnInit {
+  medicoLoaded: Promise<boolean> = Promise.resolve(false);
+  id: number;
+  medico: any;
+
+  constructor(
+    private apiService: RestApiService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private utils: Utils
+  ) {
+    this.id = parseInt(this.route.snapshot.paramMap.get('id') || '0');
+    if (this.id === 0) {
+      this.router.navigate(['/home']);
+    }
+  }
+  ngOnInit(): void {
+    this.apiService.getMedico(this.id).subscribe((data) => {
+      this.medico = data;
+      this.medicoLoaded = Promise.resolve(true);
+    });
+  }
+
+  getEspecialidadeStr(): string {
+    return this.utils.getEspecialidade(
+      this.medico.especialidade,
+      this.medico.sexo
+    );
+  }
+
+  getTituloMedico(): string {
+    return this.utils.getTituloMedico(this.medico.sexo);
+  }
 }

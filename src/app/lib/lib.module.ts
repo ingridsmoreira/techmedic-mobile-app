@@ -5,6 +5,7 @@ import { BuscaSharedModule } from './busca/busca.module';
 import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas.module';
 import { ConsultasAnterioresModule } from './consultas-anteriores/consultas-anteriores.module';
 import { BuscaResModule } from './busca-res/busca-res.module';
+import { AgendaMedicoModule } from './agenda-medico/agenda-medico.module';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { BuscaResModule } from './busca-res/busca-res.module';
     ProximasConsultasModule,
     ConsultasAnterioresModule,
     BuscaResModule,
+    AgendaMedicoModule,
   ],
   exports: [
     LoginLibModule,
@@ -22,6 +24,7 @@ import { BuscaResModule } from './busca-res/busca-res.module';
     ProximasConsultasModule,
     ConsultasAnterioresModule,
     BuscaResModule,
+    AgendaMedicoModule,
   ],
 })
 export class LibModule {}

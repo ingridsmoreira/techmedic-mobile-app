@@ -1,0 +1,66 @@
+.agenda-container
+    background-color: #fff
+    justify-content: center
+    align-items: center
+    display: block
+h3
+    font-family: 'Overpass', sans-serif
+    font-weight: bold
+    font-size: 20px
+    color: #090F47
+    display: block
+    text-align: left
+
+.dias-wrapper
+    display: flex
+    width: 100%
+    justify-content: space-between
+
+    .dia-agenda
+        display: block
+        width: 72px
+        height: 69px
+        border: 1px solid rgba(9, 15, 71, 0.1)
+        border-radius: 6px
+
+        div
+            margin-top: 8px
+
+.item
+    text-align: center
+    font-family: 'Overpass', 'Roboto'
+    font-size: 15px
+    color: #5E17EB
+
+.item-selecionado
+    background-color: #5E17EB
+    color: #fff !important
+
+.item-desabilitado
+    background-color: #D9D9D9
+    color: #5E17EB !important
+
+.horarios-wrapper
+    display: block
+    float: left
+    width: 100%
+
+.hora-agenda
+    display: block
+    float: left
+    width: 72px
+    height: 39px
+    border: 1px solid rgba(9, 15, 71, 0.1)
+    border-radius: 6px
+    margin-right: 22px
+    margin-top: 25px
+
+.hora-agenda:nth-child(4n)
+    margin-right: 0
+
+.horario-txt
+    margin: 10px
+
+.btn-agendar
+    text-align: center
+    margin-top: calc(100vh - 640px)

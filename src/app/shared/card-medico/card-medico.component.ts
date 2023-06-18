@@ -1,8 +1,9 @@
-import { DatePipe } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { cardMedico } from 'src/app/core/model/enum/cardMedico';
 import { Especialidades } from 'src/app/core/model/enum/especialidades';
 import { CardMedico } from 'src/app/core/model/interfaces/medico.interface';
+import { Utils } from '../utils/utils';
 
 @Component({
   selector: 'app-card-medico',
@@ -23,36 +24,21 @@ export class CardMedicoComponent {
   };
   @Input() cardMedico: CardMedico = this.dummyCardMedico as CardMedico;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(private router: Router, private utils: Utils) {}
 
   getEspecialidadeStr(): string {
-    switch (this.cardMedico.especialidade) {
-      case Especialidades.Pediatra:
-        return 'Pediatra';
-      case Especialidades.Ginecologista:
-        return 'Ginecologista';
-      case Especialidades.Dentista:
-        return 'Dentista';
-      case Especialidades.Nutricionista:
-        return 'Nutricionista';
-      case Especialidades.Endocrinologista:
-        return 'Endocrinologista';
-      case Especialidades.Dermatologista:
-        return 'Dermatologista';
-      case Especialidades.Oftalmologista:
-        return 'Oftalmologista';
-      case Especialidades.Geral:
-      default:
-        return this.cardMedico.sexo === 'M' ? 'Clínico Geral' : 'Clínica Geral';
-    }
+    return this.utils.getEspecialidade(
+      this.cardMedico.especialidade,
+      this.cardMedico.sexo
+    );
+  }
+
+  getTituloMedico(): string {
+    return this.utils.getTituloMedico(this.cardMedico.sexo);
   }
 
   getHoraConsulta(): string {
-    const data = this.datePipe.transform(
-      this.cardMedico.data,
-      'dd/MM/YYYY - HH:MM'
-    );
-    return data ? data : 'Data não definida';
+    return this.utils.getDataHora(this.cardMedico.data);
   }
 
   onClick() {
@@ -62,7 +48,7 @@ export class CardMedicoComponent {
         break;
       case cardMedico.busca:
       default:
-        console.log('Clicou na busca');
+        this.router.navigate(['/medico/' + this.cardMedico.medicoId]);
         break;
     }
   }

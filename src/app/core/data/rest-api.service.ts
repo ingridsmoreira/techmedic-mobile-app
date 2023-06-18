@@ -5,13 +5,14 @@ import { Observable, catchError, retry, throwError } from 'rxjs';
 import { CardMedico, Medico } from '../model/interfaces/medico.interface';
 import { cardMedico } from '../model/enum/cardMedico';
 import { Calendario } from '../model/interfaces/calendario.interface';
+import { Notificacoes } from '../model/interfaces/notificacoes.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestApiService {
   md5 = require('md5');
-  apiURL = 'http://localhost:3000/api';
+  apiURL = 'http://localhost:8000/api';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -83,6 +84,34 @@ export class RestApiService {
     return this.http
       .get<Calendario[]>(this.apiURL + '/calendario/medico/' + medicoId)
       .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getCalendarios(): Observable<Calendario[]> {
+    return this.http
+      .get<Calendario[]>(this.apiURL + '/calendarios')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getNotificacoes(): Observable<Notificacoes[]> {
+    return this.http
+      .get<Notificacoes[]>(this.apiURL + '/notificacoes')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  criarCalendario(calendario: Calendario): Observable<any> {
+    const body = JSON.stringify(calendario);
+    console.log(body);
+    return this.http.post(this.apiURL + '/calendarios', body, this.httpOptions);
+  }
+
+  criarNotificacao(notificacao: Notificacoes): Observable<any> {
+    const body = JSON.stringify(notificacao);
+    console.log(body);
+    return this.http.post(
+      this.apiURL + '/notificacoes',
+      body,
+      this.httpOptions
+    );
   }
 
   handleError(error: any) {

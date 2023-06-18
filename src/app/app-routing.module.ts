@@ -8,6 +8,8 @@ import { NotificacoesComponent } from './features/notificacoes/notificacoes.comp
 import { SemInternetComponent } from './features/sem-internet/sem-internet.component';
 import { CalendarioComponent } from './features/calendario/calendario.component';
 import { BuscaComponent } from './features/busca/busca.component';
+import { MedicoComponent } from './features/medico/medico.component';
+import { ObrigadoComponent } from './features/obrigado/obrigado.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -50,6 +52,14 @@ const routes: Routes = [
     path: 'busca',
     component: BuscaComponent,
     pathMatch: 'full',
+  },
+  {
+    path: 'medico/:id',
+    component: MedicoComponent,
+  },
+  {
+    path: 'obrigado/:msg',
+    component: ObrigadoComponent,
   },
 ];
 

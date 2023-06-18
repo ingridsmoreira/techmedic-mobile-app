@@ -9,6 +9,7 @@ import { SemInternetModule } from './sem-internet/sem-internet.module';
 import { CalendarioModule } from './calendario/calendario.module';
 import { BuscaModule } from './busca/busca.module';
 import { MedicoModule } from './medico/medico.module';
+import { ObrigadoModule } from './obrigado/obrigado.module';
 
 @NgModule({
   declarations: [],
@@ -23,6 +24,7 @@ import { MedicoModule } from './medico/medico.module';
     CalendarioModule,
     BuscaModule,
     MedicoModule,
+    ObrigadoModule,
   ],
 })
 export class FeaturesModule {}

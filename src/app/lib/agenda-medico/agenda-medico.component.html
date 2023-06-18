@@ -1,0 +1,45 @@
+<div *ngIf="calendarioLoaded | async">
+  <div class="agenda-container">
+    <h3>Próximos horários disponíveis</h3>
+    <div class="dias-wrapper">
+      <div *ngFor="let selecaoDia of diasAgenda">
+        <a
+          class="dia-agenda item"
+          [ngClass]="
+            diaSelecionado === selecaoDia.data ? 'item-selecionado' : ''
+          "
+          (click)="selecionaOutroDia(selecaoDia.data)"
+        >
+          <div>{{ selecaoDia.diaSemana }}</div>
+
+          <div>{{ selecaoDia.data }}</div>
+        </a>
+      </div>
+    </div>
+    <div class="horarios-wrapper">
+      <ng-container *ngFor="let horasNoDia of horariosDoDia; let i = index">
+        <a
+          (click)="
+            selecionaOutroHorario(horasNoDia.hora, horasNoDia.disponivel)
+          "
+          class="hora-agenda item"
+          [ngClass]="[
+            !horasNoDia.disponivel ? ' item-desabilitado' : '',
+            horarioSelecionado === horasNoDia.hora ? ' item-selecionado' : ''
+          ]"
+          [ariaDisabled]="!horasNoDia.disponivel"
+        >
+          <div class="horario-txt">{{ horasNoDia.hora }}</div>
+        </a>
+      </ng-container>
+    </div>
+    <div class="btn-agendar">
+      <app-button
+        text="AGENDAR CONSULTA"
+        type="submit"
+        [disabled]="horarioSelecionado === ''"
+        (click)="agendar()"
+      ></app-button>
+    </div>
+  </div>
+</div>
