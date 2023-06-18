@@ -5,9 +5,8 @@ import { LibModule } from 'src/app/lib/lib.module';
 import { MedicoComponent } from './medico.component';
 
 @NgModule({
-  declarations: [
-    MedicoComponent
-  ],
+  declarations: [MedicoComponent],
   imports: [CommonModule, SharedModule, LibModule],
+  exports: [MedicoComponent],
 })
 export class MedicoModule {}

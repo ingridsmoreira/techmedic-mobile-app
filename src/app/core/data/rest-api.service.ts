@@ -2,13 +2,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/interfaces/user.interface';
 import { Observable, catchError, retry, throwError } from 'rxjs';
+import { CardMedico, Medico } from '../model/interfaces/medico.interface';
+import { cardMedico } from '../model/enum/cardMedico';
+import { Calendario } from '../model/interfaces/calendario.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestApiService {
   md5 = require('md5');
-  apiURL = 'http://localhost:3000';
+  apiURL = 'http://localhost:3000/api';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -16,6 +19,8 @@ export class RestApiService {
   };
 
   constructor(private http: HttpClient) {}
+
+  //user
 
   getUser(userId: string): Observable<User> {
     return this.http
@@ -46,6 +51,37 @@ export class RestApiService {
         JSON.stringify(user),
         this.httpOptions
       )
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getCalendarioUser(userId: string): Observable<Calendario[]> {
+    return this.http
+      .get<Calendario[]>(this.apiURL + '/calendario/user/' + userId)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  // Medico
+  getMedico(medicoId: number): Observable<Medico> {
+    return this.http
+      .get<Medico>(this.apiURL + '/medico/' + medicoId)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getProximasConsultas(): Observable<CardMedico[]> {
+    return this.http
+      .get<CardMedico[]>(this.apiURL + '/proximaConsulta')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getConsultasPassadas(): Observable<CardMedico[]> {
+    return this.http
+      .get<CardMedico[]>(this.apiURL + '/consultasPassadas')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  getCalendariosMedico(medicoId: number): Observable<Calendario[]> {
+    return this.http
+      .get<Calendario[]>(this.apiURL + '/calendario/medico/' + medicoId)
       .pipe(retry(1), catchError(this.handleError));
   }
 

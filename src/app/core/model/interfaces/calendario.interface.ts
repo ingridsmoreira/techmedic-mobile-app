@@ -3,5 +3,4 @@ export interface Calendario {
   userId: number;
   medicoId: number;
   data: Date;
-  hora: string;
 }

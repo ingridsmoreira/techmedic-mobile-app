@@ -7,15 +7,16 @@ export interface Medico {
   descricao: string;
   especialidade: Especialidades;
   photoUrl: string;
+  sexo: string;
 }
 
 export interface CardMedico {
   calendarioId?: number;
   medicoId: number;
-  medicoSexo: string;
-  medicoNome: string;
-  medicoEspecialidade: Especialidades;
-  medicoPhotoUrl: string;
+  sexo: string;
+  nome: string;
+  especialidade: Especialidades;
+  photoUrl: string;
   data?: Date;
   tipo: cardMedico;
 }
