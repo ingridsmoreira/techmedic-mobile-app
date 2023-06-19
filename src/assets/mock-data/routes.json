@@ -1,4 +1,5 @@
 {
   "/api/*": "/$1",
-  "/calendario/medico/:medicoId": "/calendarios?medicoId=:medicoId"
+  "/calendario/medico/:medicoId": "/calendarios?medicoId=:medicoId",
+  "/notificacoes/user/:userId": "/notificacoes?userId=:userId"
 }

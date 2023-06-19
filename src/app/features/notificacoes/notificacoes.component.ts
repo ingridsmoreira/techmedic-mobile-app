@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
 
 @Component({
@@ -7,24 +8,16 @@ import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interfa
   styleUrls: ['./notificacoes.component.sass'],
 })
 export class NotificacoesComponent {
-  notificacoes: Notificacoes[] = [
-    {
-      id: 1,
-      userId: 1,
-      vista: false,
-      mensagem: 'testando 123',
-      icone: 'event',
-      data: new Date(),
-    },
-    {
-      id: 2,
-      userId: 1,
-      vista: true,
-      mensagem: 'testando 123211221',
-      icone: 'notifications_none',
-      data: new Date(),
-    },
-  ];
+  notificacaoLoaded: Promise<boolean> = Promise.resolve(false);
+  userId = 1;
+  notificacoes: Notificacoes[] = [];
+
+  constructor(private apiService: RestApiService) {
+    this.apiService.getUserNotificacoes(this.userId).subscribe((data) => {
+      this.notificacoes = data;
+      this.notificacaoLoaded = Promise.resolve(true);
+    });
+  }
 
   apagarNotificacoes() {
     console.log('teste');

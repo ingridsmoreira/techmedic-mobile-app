@@ -92,6 +92,12 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  getUserNotificacoes(userId: number): Observable<Notificacoes[]> {
+    return this.http
+      .get<Notificacoes[]>(this.apiURL + '/notificacoes/user/' + userId)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   getNotificacoes(): Observable<Notificacoes[]> {
     return this.http
       .get<Notificacoes[]>(this.apiURL + '/notificacoes')
