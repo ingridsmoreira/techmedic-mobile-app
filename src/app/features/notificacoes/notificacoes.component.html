@@ -10,6 +10,10 @@
         <hr />
         <app-notificacao [notificacao]="notificacao"></app-notificacao>
       </div>
+      <div *ngIf="notificacoes.length === 0">
+        <hr />
+        <h3 class="no-notificacoes">Não há notificações</h3>
+      </div>
     </div>
   </div>
 </div>

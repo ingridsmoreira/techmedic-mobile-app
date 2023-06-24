@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../model/interfaces/user.interface';
 import { Observable, catchError, retry, throwError } from 'rxjs';
 import { CardMedico, Medico } from '../model/interfaces/medico.interface';
-import { cardMedico } from '../model/enum/cardMedico';
 import { Calendario } from '../model/interfaces/calendario.interface';
 import { Notificacoes } from '../model/interfaces/notificacoes.interface';
 
@@ -98,6 +97,23 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
+  vizualizaNotificacoes(
+    notificacao: Notificacoes,
+    id: number
+  ): Observable<any> {
+    const body = JSON.stringify(notificacao);
+
+    return this.http
+      .put<any>(this.apiURL + '/notificacoes/' + id, body, this.httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  deleteNotificacao(id: number): Observable<any> {
+    return this.http
+      .delete<any>(this.apiURL + '/notificacoes/' + id, this.httpOptions)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   getNotificacoes(): Observable<Notificacoes[]> {
     return this.http
       .get<Notificacoes[]>(this.apiURL + '/notificacoes')
@@ -106,13 +122,11 @@ export class RestApiService {
 
   criarCalendario(calendario: Calendario): Observable<any> {
     const body = JSON.stringify(calendario);
-    console.log(body);
     return this.http.post(this.apiURL + '/calendarios', body, this.httpOptions);
   }
 
   criarNotificacao(notificacao: Notificacoes): Observable<any> {
     const body = JSON.stringify(notificacao);
-    console.log(body);
     return this.http.post(
       this.apiURL + '/notificacoes',
       body,
@@ -129,7 +143,7 @@ export class RestApiService {
       // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    window.alert(errorMessage);
+    // window.alert(errorMessage);
     return throwError(() => {
       return errorMessage;
     });

@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
+import { Utils } from '../utils/utils';
 
 @Component({
   selector: 'app-notificacao',
@@ -11,13 +12,11 @@ import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interfa
 export class NotificacaoComponent {
   @Input() notificacao: Notificacoes | undefined = undefined;
 
-  constructor(private datePipe: DatePipe) {}
+  constructor(private utils: Utils) {}
 
   trataHora() {
-    const data = this.datePipe.transform(
-      this.notificacao?.data,
-      'dd/MM/YYYY - HH:MM'
-    );
-    return data;
+    return this.notificacao
+      ? this.utils.getDataHora(this.notificacao.data)
+      : '';
   }
 }

@@ -13,13 +13,32 @@ export class NotificacoesComponent {
   notificacoes: Notificacoes[] = [];
 
   constructor(private apiService: RestApiService) {
+    this.listarNotificacoes();
+  }
+
+  listarNotificacoes() {
     this.apiService.getUserNotificacoes(this.userId).subscribe((data) => {
       this.notificacoes = data;
       this.notificacaoLoaded = Promise.resolve(true);
+      data.forEach((notificao) => {
+        if (notificao.vista === false) {
+          const notificacaoAtualizada = { ...notificao, vista: true };
+          this.apiService
+            .vizualizaNotificacoes(notificacaoAtualizada, notificao.id)
+            .subscribe((data) => {});
+        }
+      });
     });
   }
 
   apagarNotificacoes() {
-    console.log('teste');
+    this.notificacoes.forEach((notificacao) => {
+      this.apiService.deleteNotificacao(notificacao.id).subscribe((data) => {
+        this.notificacoes = this.notificacoes.filter(
+          (notificacao) => notificacao.id !== data.id
+        );
+      });
+    });
+    this.listarNotificacoes();
   }
 }
