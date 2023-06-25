@@ -10,6 +10,7 @@ import { CalendarioComponent } from './features/calendario/calendario.component'
 import { BuscaComponent } from './features/busca/busca.component';
 import { MedicoComponent } from './features/medico/medico.component';
 import { ObrigadoComponent } from './features/obrigado/obrigado.component';
+import { CalendarioAgendadoComponent } from './features/calendario-agendado/calendario-agendado.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -46,6 +47,11 @@ const routes: Routes = [
   {
     path: 'calendario',
     component: CalendarioComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'calendario/agendado/:idCalendario',
+    component: CalendarioAgendadoComponent,
     pathMatch: 'full',
   },
   {

@@ -4,11 +4,9 @@ import { User } from '../model/interfaces/user.interface';
 import {
   Observable,
   catchError,
-  filter,
   firstValueFrom,
   map,
   retry,
-  take,
   throwError,
 } from 'rxjs';
 import { CardMedico, Medico } from '../model/interfaces/medico.interface';
@@ -86,17 +84,6 @@ export class RestApiService {
   async getUserCalendarioCard(userId: number): Promise<CardMedico[]> {
     let medicos: Medico[] = [];
     let calendarioUser: Calendario[] = [];
-    // this.getAllMedicos()
-    //   .pipe(take(1))
-    //   .subscribe((meds) => {
-    //     medicos = meds;
-    //   });
-    // this.getCalendarioUser(userId)
-    //   .pipe(take(1))
-    //   .subscribe((calend) => {
-    //     calendarioUser = calend;
-    //   });
-
     await firstValueFrom(this.getCalendarioUser(userId)).then(
       (calend) => (calendarioUser = calend)
     );
@@ -151,6 +138,12 @@ export class RestApiService {
       }
       return false;
     });
+  }
+
+  getCalendario(calendarioId: number): Observable<Calendario> {
+    return this.http
+      .get<Calendario>(this.apiURL + '/calendarios/' + calendarioId)
+      .pipe(retry(1), catchError(this.handleError));
   }
 
   getConsultasPassadas(): Observable<CardMedico[]> {

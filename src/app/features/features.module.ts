@@ -10,9 +10,9 @@ import { CalendarioModule } from './calendario/calendario.module';
 import { BuscaModule } from './busca/busca.module';
 import { MedicoModule } from './medico/medico.module';
 import { ObrigadoModule } from './obrigado/obrigado.module';
+import { CalendarioAgendadoModule } from './calendario-agendado/calendario-agendado.module';
 
 @NgModule({
-  declarations: [],
   imports: [
     CommonModule,
     SplashModule,
@@ -25,6 +25,7 @@ import { ObrigadoModule } from './obrigado/obrigado.module';
     BuscaModule,
     MedicoModule,
     ObrigadoModule,
+    CalendarioAgendadoModule,
   ],
 })
 export class FeaturesModule {}

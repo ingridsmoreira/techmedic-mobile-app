@@ -1,0 +1,42 @@
+<div class="calendario-container">
+  <app-back-btn></app-back-btn>
+  <h2>Dados da Consulta</h2>
+  <div *ngIf="medicoLoaded | async">
+    <hr />
+    <h3 class="titulos">Informacoes da consulta</h3>
+    <div class="dados-consulta">
+      <h4>Data da Consulta: {{ getHoraConsulta() }}</h4>
+    </div>
+    <hr />
+    <h3 class="titulos">Informacoes profissionais</h3>
+    <div class="dados-medico">
+      <div class="foto-perfil-wrapper">
+        <img src="{{ medico.photoUrl }}" />
+      </div>
+
+      <div class="titulo-wrapper">
+        <h3>{{ geraNomeMedico() }}</h3>
+        <p>{{ getEspecialidadeStr() }}</p>
+      </div>
+
+      <div class="desc-wrapper">
+        <h3>Descriçāo:</h3>
+        <p>{{ medico.descricao }}</p>
+      </div>
+    </div>
+    <div class="btn-agendar">
+      <app-button
+        text="ADICIONAR AO CALENDARIO"
+        type="submit"
+        [disabled]="!checaHoras()"
+        (click)="adicionarAoCalendario()"
+      ></app-button>
+      <app-button
+        text="CANCELAR CONSULTA"
+        type="submit"
+        [disabled]="!checaHoras()"
+        (click)="cancelarAgendamento()"
+      ></app-button>
+    </div>
+  </div>
+</div>
