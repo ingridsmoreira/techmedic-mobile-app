@@ -199,7 +199,6 @@ export class AgendaMedicoComponent implements OnInit {
       this.apiService
         .criarNotificacao(novaNotificacao)
         .subscribe((resNotificacao) => {
-          console.log(resNotificacao);
           this.navegarProximaTela(msg);
         });
     });
@@ -231,7 +230,6 @@ export class AgendaMedicoComponent implements OnInit {
       this.apiService
         .criarCalendario(novoCalendario)
         .subscribe((resCalendario) => {
-          console.log(resCalendario);
           this.criarNotificacao(true);
         });
     });

@@ -49,7 +49,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'busca',
+    path: 'busca/:inputBusca',
     component: BuscaComponent,
     pathMatch: 'full',
   },

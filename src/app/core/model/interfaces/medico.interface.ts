@@ -2,7 +2,7 @@ import { cardMedico } from '../enum/cardMedico';
 import { Especialidades } from '../enum/especialidades';
 
 export interface Medico {
-  medicoId: number;
+  id: number;
   nome: string;
   descricao: string;
   especialidade: Especialidades;

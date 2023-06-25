@@ -4,7 +4,15 @@
       <mat-icon class="icone" [class.active]="isActive('home')">home</mat-icon>
     </a>
     <a href="/notificacoes" routerLinkActive="active" class="footer-menu__item">
-      <mat-icon class="icone" [class.active]="isActive('notificacoes')"
+      <mat-icon
+        *ngIf="temNovasNotificacoes"
+        class="icone"
+        matBadge="1"
+        matBadgeSize="small"
+        matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+      <mat-icon *ngIf="!temNovasNotificacoes" class="icone"
         >notifications</mat-icon
       >
     </a>

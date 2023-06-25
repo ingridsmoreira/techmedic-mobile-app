@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { RestApiService } from 'src/app/core/data/rest-api.service';
 
 @Component({
   selector: 'app-footer-menu',
@@ -7,7 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./footer-menu.component.sass'],
 })
 export class FooterMenuComponent {
-  constructor(private router: Router) {}
+  userId = 1;
+  temNovasNotificacoes = false;
+
+  constructor(private router: Router, private apiService: RestApiService) {
+    this.apiService.temNovasNotificacoes(this.userId).subscribe((data) => {
+      this.temNovasNotificacoes = data;
+    });
+  }
 
   isActive(route: string): boolean {
     return this.router.url.includes(route);

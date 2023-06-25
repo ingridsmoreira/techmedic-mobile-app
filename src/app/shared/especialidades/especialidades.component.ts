@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-especialidades',
@@ -7,7 +8,9 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None,
 })
 export class EspecialidadesComponent {
+  constructor(private router: Router) {}
+
   onCardClick(especialidade: string) {
-    console.log(especialidade);
+    this.router.navigate(['/busca', especialidade]);
   }
 }

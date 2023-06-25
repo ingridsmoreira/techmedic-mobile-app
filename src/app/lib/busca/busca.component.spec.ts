@@ -1,16 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { BuscaComponent } from './busca.component';
+import { BuscaInputFieldComponent } from './busca.component';
 
 describe('BuscaComponent', () => {
-  let component: BuscaComponent;
-  let fixture: ComponentFixture<BuscaComponent>;
+  let component: BuscaInputFieldComponent;
+  let fixture: ComponentFixture<BuscaInputFieldComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BuscaComponent]
+      declarations: [BuscaInputFieldComponent],
     });
-    fixture = TestBed.createComponent(BuscaComponent);
+    fixture = TestBed.createComponent(BuscaInputFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

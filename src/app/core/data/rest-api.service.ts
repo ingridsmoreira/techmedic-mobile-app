@@ -1,10 +1,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../model/interfaces/user.interface';
-import { Observable, catchError, retry, throwError } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  filter,
+  firstValueFrom,
+  map,
+  retry,
+  take,
+  throwError,
+} from 'rxjs';
 import { CardMedico, Medico } from '../model/interfaces/medico.interface';
 import { Calendario } from '../model/interfaces/calendario.interface';
 import { Notificacoes } from '../model/interfaces/notificacoes.interface';
+import { cardMedico } from '../model/enum/cardMedico';
 
 @Injectable({
   providedIn: 'root',
@@ -54,23 +64,93 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getCalendarioUser(userId: string): Observable<Calendario[]> {
+  getCalendarioUser(userId: number): Observable<Calendario[]> {
     return this.http
       .get<Calendario[]>(this.apiURL + '/calendario/user/' + userId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   // Medico
+  getAllMedicos(): Observable<Medico[]> {
+    return this.http
+      .get<Medico[]>(this.apiURL + '/medico/')
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
   getMedico(medicoId: number): Observable<Medico> {
     return this.http
       .get<Medico>(this.apiURL + '/medico/' + medicoId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getProximasConsultas(): Observable<CardMedico[]> {
-    return this.http
-      .get<CardMedico[]>(this.apiURL + '/proximaConsulta')
-      .pipe(retry(1), catchError(this.handleError));
+  async getUserCalendarioCard(userId: number): Promise<CardMedico[]> {
+    let medicos: Medico[] = [];
+    let calendarioUser: Calendario[] = [];
+    // this.getAllMedicos()
+    //   .pipe(take(1))
+    //   .subscribe((meds) => {
+    //     medicos = meds;
+    //   });
+    // this.getCalendarioUser(userId)
+    //   .pipe(take(1))
+    //   .subscribe((calend) => {
+    //     calendarioUser = calend;
+    //   });
+
+    await firstValueFrom(this.getCalendarioUser(userId)).then(
+      (calend) => (calendarioUser = calend)
+    );
+    await firstValueFrom(this.getAllMedicos()).then(
+      (listaMedicos) => (medicos = listaMedicos)
+    );
+    const cardsMedicos: CardMedico[] = [];
+    console.log(calendarioUser.length);
+    calendarioUser.forEach((calendario) => {
+      console.log('oi');
+      const medico = medicos.filter((med) => med.id === calendario.medicoId)[0];
+      const novoCard: CardMedico = {
+        calendarioId: calendario.id,
+        medicoId: medico.id,
+        sexo: medico.sexo,
+        nome: medico.nome,
+        especialidade: medico.especialidade,
+        photoUrl: medico.photoUrl,
+        data: calendario.data,
+        tipo: cardMedico.calendario,
+      };
+      cardsMedicos.push(novoCard);
+    });
+    return cardsMedicos;
+  }
+
+  async getProximasConsultasUser(userId: number): Promise<CardMedico[]> {
+    let calendarioUser: CardMedico[] = [];
+    await this.getUserCalendarioCard(userId).then(
+      (calend) => (calendarioUser = calend)
+    );
+    const agora = new Date();
+    return calendarioUser.filter((calendario) => {
+      if (calendario.data) {
+        const dataDoCalendartio = new Date(calendario.data.toString());
+        return dataDoCalendartio > agora;
+      }
+      return false;
+    });
+  }
+
+  async getConsultasPassadasUser(userId: number): Promise<CardMedico[]> {
+    let calendarioUser: CardMedico[] = [];
+    await this.getUserCalendarioCard(userId).then(
+      (calend) => (calendarioUser = calend)
+    );
+    const agora = new Date();
+    return calendarioUser.filter((calendario) => {
+      if (calendario.data) {
+        const dataDoCalendartio = new Date(calendario.data.toString());
+        return dataDoCalendartio < agora;
+      }
+      return false;
+    });
   }
 
   getConsultasPassadas(): Observable<CardMedico[]> {
@@ -94,6 +174,27 @@ export class RestApiService {
   getUserNotificacoes(userId: number): Observable<Notificacoes[]> {
     return this.http
       .get<Notificacoes[]>(this.apiURL + '/notificacoes/user/' + userId)
+      .pipe(retry(1), catchError(this.handleError));
+  }
+
+  temNovasNotificacoes(userId: number): Observable<boolean> {
+    return this.http
+      .get<Notificacoes[]>(this.apiURL + '/notificacoes/user/' + userId)
+      .pipe(
+        retry(1),
+        map((notificacoes) => {
+          const res = notificacoes.filter(
+            (notificao) => notificao.vista === false
+          );
+          return res.length > 0;
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  buscaEspecialidade(especialidade: string): Observable<Medico[]> {
+    return this.http
+      .get<Medico[]>(this.apiURL + '/busca/medico/' + especialidade)
       .pipe(retry(1), catchError(this.handleError));
   }
 

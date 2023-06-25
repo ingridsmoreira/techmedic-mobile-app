@@ -9,7 +9,17 @@
       <mat-icon class="icone">events</mat-icon>
     </a>
     <a href="/notificacoes" routerLinkActive="active" class="header-menu__item">
-      <mat-icon class="icone">notifications</mat-icon>
+      <mat-icon
+        *ngIf="temNovasNotificacoes"
+        class="icone"
+        matBadge="1"
+        matBadgeSize="small"
+        matBadgeColor="warn"
+        >notifications</mat-icon
+      >
+      <mat-icon *ngIf="!temNovasNotificacoes" class="icone"
+        >notifications</mat-icon
+      >
     </a>
   </div>
   <div class="welcome-wrapper">
@@ -17,6 +27,8 @@
     <p>Bem-vindo(a) ao TECHMEDIC</p>
   </div>
   <div class="busca-wrapper">
-    <app-busca-input-field></app-busca-input-field>
+    <app-busca-input-field
+      (buscaEmmiter)="buscaRealizada($event)"
+    ></app-busca-input-field>
   </div>
 </header>

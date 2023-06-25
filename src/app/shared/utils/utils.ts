@@ -34,7 +34,7 @@ export class Utils {
   }
 
   getDataHora(data?: Date): string {
-    const dataTxt = this.datePipe.transform(data, 'dd/MM/YYYY - HH:MM');
+    const dataTxt = this.datePipe.transform(data, 'dd/MM/YYYY - HH:mm');
     return dataTxt ? dataTxt : 'Data não definida';
   }
 
