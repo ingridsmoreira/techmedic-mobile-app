@@ -14,9 +14,9 @@ export class UserService {
       .pipe(map((user) => user || []));
   }
 
-  loginUser(login: User): Observable<User> {
+  loginUser(login: User): Observable<User[]> {
     return this.http
-      .post<User>(apiConstants.apiUrl + '/user/login', JSON.stringify(login))
+      .post<User[]>(apiConstants.apiUrl + '/user/login', JSON.stringify(login))
       .pipe(map((user) => user || null));
   }
 

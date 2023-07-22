@@ -1,5 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
+import { User } from 'src/app/core/model/interfaces/user.interface';
+import { UserService } from 'src/app/core/services/user.service';
+import { UserActions } from 'src/app/core/state/actions/user.actions';
 
 @Component({
   selector: 'app-core-login',
@@ -11,22 +16,39 @@ export class LoginComponent implements OnInit {
   loginSucess: boolean = false;
   @Output() onLoginEvent = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      email: ['', Validators.required],
+      senha: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      // Adicione aqui a lógica para autenticar o usuário
-      // checa login, e redireciona se for true
-      this.loginSucess = true;
-      this.onLoginEvent.emit(this.loginSucess);
+      this.userService
+        .loginUser(this.loginForm.value)
+        .pipe(take(1))
+        .subscribe((user: User[]) => {
+          debugger;
+          if (
+            user[0] !== undefined &&
+            user[0].id !== undefined &&
+            user[0].id > 0
+          ) {
+            this.onLoginEvent.emit(true);
+            return this.store.dispatch(
+              UserActions.createUser({ user: user[0] })
+            );
+          } else {
+            this.onLoginEvent.emit(false);
+          }
+        });
     }
   }
 }

@@ -2,13 +2,13 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <app-input-field
       label="Usuário"
-      formControlName="username"
+      formControlName="email"
       icon="person_outline"
     ></app-input-field>
     <app-input-field
       label="Senha"
       type="password"
-      formControlName="password"
+      formControlName="senha"
       icon="lock"
     ></app-input-field>
     <app-button
