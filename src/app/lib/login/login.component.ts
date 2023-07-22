@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
             user[0].id > 0
           ) {
             this.onLoginEvent.emit(true);
+            sessionStorage.setItem('userId', user[0].id.toString());
             return this.store.dispatch(
               UserActions.createUser({ user: user[0] })
             );

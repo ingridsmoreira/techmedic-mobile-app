@@ -43,6 +43,7 @@ export class CadastroComponent implements OnInit {
             user[0].id > 0
           ) {
             this.onCadastroEvent.emit(true);
+            sessionStorage.setItem('userId', user[0].id.toString());
             return this.store.dispatch(
               UserActions.createUser({ user: user[0] })
             );
