@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
+import { selectUser } from 'src/app/core/state/selectors/user.selectors';
 
 @Component({
   selector: 'app-header-menu',
@@ -11,7 +14,13 @@ export class HeaderMenuComponent {
   temNovasNotificacoes = false;
   @Output() buscaEmmiter = new EventEmitter<string>();
 
-  constructor(private apiService: RestApiService) {
+  constructor(private apiService: RestApiService, private store: Store) {
+    this.store
+      .select(selectUser)
+      .pipe(take(1))
+      .subscribe((user) => {
+        console.log(user);
+      });
     this.apiService.temNovasNotificacoes(this.userId).subscribe((data) => {
       this.temNovasNotificacoes = data;
     });

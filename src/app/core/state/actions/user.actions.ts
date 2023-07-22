@@ -1,7 +1,12 @@
-import { createAction, props } from '@ngrx/store';
+import { Action, createActionGroup, props } from '@ngrx/store';
 import { User } from '../../model/interfaces/user.interface';
 
-export const getUser = createAction('[User] Get user', props<{ user: any }>());
-export const login = createAction('[User] Login', props<{ user: any }>());
-export const create = createAction('[User] Criar User', props<{ user: any }>());
-export const logout = createAction('[User] Logout');
+export const UserActions = createActionGroup({
+  source: 'User',
+  events: {
+    'Create User': props<{ user: User }>(),
+    'Login User': props<{ user: User }>(),
+    // 'Get User': props<{ user: User }>(),
+    'Update User': props<{ user: User }>(),
+  },
+});

@@ -9,8 +9,10 @@ import { Router } from '@angular/router';
 export class CadastroComponent {
   constructor(private router: Router) {}
 
-  onCadastroClick(event: any) {
-    console.log(event);
+  onTentarCadastro(event: any) {
+    if (event) {
+      this.router.navigate(['/home']);
+    }
   }
 
   onLoginClick() {

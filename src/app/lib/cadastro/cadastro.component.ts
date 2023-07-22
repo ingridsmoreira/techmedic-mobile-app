@@ -1,7 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
+import { User } from 'src/app/core/model/interfaces/user.interface';
+import { UserService } from 'src/app/core/services/user.service';
+import { UserActions } from 'src/app/core/state/actions/user.actions';
 
 @Component({
   selector: 'app-core-cadastro',
@@ -10,15 +14,18 @@ import { RestApiService } from 'src/app/core/data/rest-api.service';
 })
 export class CadastroComponent implements OnInit {
   cadastroForm!: FormGroup;
-  cadastroSuccess = false;
   @Output() onCadastroEvent = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private apiService: RestApiService) {}
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private userService: UserService
+  ) {}
 
   ngOnInit() {
     this.cadastroForm = this.fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required],
+      senha: ['', Validators.required],
       nome: ['', Validators.required],
       telefone: ['', Validators.required],
     });
@@ -26,15 +33,23 @@ export class CadastroComponent implements OnInit {
 
   onSubmit() {
     if (this.cadastroForm.valid) {
-      console.log(this.cadastroForm.value);
-      this.apiService
+      this.userService
         .createUser(this.cadastroForm.value)
         .pipe(take(1))
-        .subscribe((data) => {});
-      // Adicione aqui a lógica para autenticar o usuário
-      // checa login, e redireciona se for true
-      this.cadastroSuccess = true;
-      this.onCadastroEvent.emit(this.cadastroSuccess);
+        .subscribe((user: User[]) => {
+          if (
+            user[0] !== undefined &&
+            user[0].id !== undefined &&
+            user[0].id > 0
+          ) {
+            this.onCadastroEvent.emit(true);
+            return this.store.dispatch(
+              UserActions.createUser({ user: user[0] })
+            );
+          } else {
+            this.onCadastroEvent.emit(false);
+          }
+        });
     }
   }
 }

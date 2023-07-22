@@ -19,7 +19,6 @@ import { cardMedico } from '../model/enum/cardMedico';
 })
 export class RestApiService {
   md5 = require('md5');
-  apiURL = 'http://localhost:8000/api';
   apiURL2 = 'http://localhost:3000';
   httpOptions = {
     headers: new HttpHeaders({
@@ -46,7 +45,7 @@ export class RestApiService {
     login.senha = login?.senha ? this.md5(login?.senha) : '';
     return this.http
       .post<any>(
-        this.apiURL + '/user/login',
+        this.apiURL2 + '/user/login',
         JSON.stringify(login),
         this.httpOptions
       )
@@ -54,9 +53,6 @@ export class RestApiService {
   }
 
   createUser(user: any): Observable<User> {
-    if (user.senha) {
-      user.senha = this.md5(user?.senha);
-    }
     return this.http
       .post<any>(this.apiURL2 + '/user/create', JSON.stringify(user))
       .pipe(retry(1), catchError(this.handleError));

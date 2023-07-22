@@ -6,8 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
 import { LibModule } from './lib/lib.module';
-import { StateModule } from './core/state/state.module';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
+import { StateModule } from './core/state/state.module';
 
 @NgModule({
   declarations: [AppComponent],

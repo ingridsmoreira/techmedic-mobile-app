@@ -1,24 +1,26 @@
-import { createReducer, on } from '@ngrx/store';
-import { login, create, logout, getUser } from '../actions/user.actions';
+import { createReducer, on, ActionCreator } from '@ngrx/store';
+import { User } from '../../model/interfaces/user.interface';
+import { UserActions } from '../actions/user.actions';
 
-export const initialState = {
-  user: {
-    username: '',
-    nome: '',
-    numero: '',
-    userId: 0,
-    isLoggedIn: false,
-    photoUrl: '',
-  },
+export const initialStateUser: User = {
+  email: '',
+  nome: '',
+  telefone: '',
+  id: 0,
+  isLoggedIn: false,
 };
 
 export const userReducer = createReducer(
-  initialState,
-  on(login, (state, { user }) => ({
-    ...state,
-    user: { ...user, isLoggedIn: true },
+  initialStateUser,
+  on(UserActions.createUser, (_state, { user }) => ({
+    ...user,
+    isLoggedIn: true,
   })),
-  on(create, (state, { user }) => ({ ...state, user: { ...user } })),
-  on(getUser, (state, { user }) => ({ ...state, user: { ...user } })),
-  on(logout, (state) => ({ ...state, user: initialState.user }))
+  on(UserActions.loginUser, (_state, { user }) => {
+    return user !== null ? { ...user, isLoggedIn: true } : initialStateUser;
+  }),
+  on(UserActions.updateUser, (_state, { user }) => ({
+    ...user,
+    isLoggedIn: true,
+  }))
 );

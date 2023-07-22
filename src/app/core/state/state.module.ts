@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { userReducer } from './reducers/user.reducer';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { userReducer } from './reducers/user.reducer';
 
 @NgModule({
   declarations: [],
-
   imports: [
-    CommonModule,
-    StoreModule.forRoot({ user: userReducer }),
-    StoreDevtoolsModule.instrument(),
+    StoreModule.forRoot({
+      user: userReducer,
+    }),
   ],
+  exports: [],
+  providers: [],
 })
 export class StateModule {}
