@@ -16,7 +16,7 @@ export class NotificacaoComponent {
 
   trataHora() {
     return this.notificacao
-      ? this.utils.getDataHora(this.notificacao.data)
+      ? this.utils.getDataHoraString(this.notificacao.data)
       : '';
   }
 }

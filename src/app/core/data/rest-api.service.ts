@@ -20,9 +20,15 @@ import { cardMedico } from '../model/enum/cardMedico';
 export class RestApiService {
   md5 = require('md5');
   apiURL = 'http://localhost:8000/api';
+  apiURL2 = 'http://localhost:3000';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': 'true',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': '*',
+      key: 'x-api-key',
     }),
   };
 
@@ -30,9 +36,9 @@ export class RestApiService {
 
   //user
 
-  getUser(userId: string): Observable<User> {
+  getUser(userId: number): Observable<User[]> {
     return this.http
-      .get<User>(this.apiURL + '/user/' + userId)
+      .get<User[]>(this.apiURL2 + '/user/get?id=' + userId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
@@ -47,37 +53,31 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  createUser(user: User): Observable<User> {
+  createUser(user: any): Observable<User> {
     if (user.senha) {
       user.senha = this.md5(user?.senha);
-    } else {
-      delete user.senha;
     }
     return this.http
-      .post<any>(
-        this.apiURL + '/user/create',
-        JSON.stringify(user),
-        this.httpOptions
-      )
+      .post<any>(this.apiURL2 + '/user/create', JSON.stringify(user))
       .pipe(retry(1), catchError(this.handleError));
   }
 
   getCalendarioUser(userId: number): Observable<Calendario[]> {
     return this.http
-      .get<Calendario[]>(this.apiURL + '/calendario/user/' + userId)
+      .get<Calendario[]>(this.apiURL2 + '/calendario/getUser?userId=' + userId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   // Medico
   getAllMedicos(): Observable<Medico[]> {
     return this.http
-      .get<Medico[]>(this.apiURL + '/medico/')
+      .get<Medico[]>(this.apiURL2 + '/medico/all')
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getMedico(medicoId: number): Observable<Medico> {
+  getMedico(medicoId: number): Observable<Medico[]> {
     return this.http
-      .get<Medico>(this.apiURL + '/medico/' + medicoId)
+      .get<Medico[]>(this.apiURL2 + '/medico/get?medicoId=' + medicoId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
@@ -91,9 +91,7 @@ export class RestApiService {
       (listaMedicos) => (medicos = listaMedicos)
     );
     const cardsMedicos: CardMedico[] = [];
-    console.log(calendarioUser.length);
     calendarioUser.forEach((calendario) => {
-      console.log('oi');
       const medico = medicos.filter((med) => med.id === calendario.medicoId)[0];
       const novoCard: CardMedico = {
         calendarioId: calendario.id,
@@ -140,45 +138,39 @@ export class RestApiService {
     });
   }
 
-  getCalendario(calendarioId: number): Observable<Calendario> {
+  getCalendario(calendarioId: number): Observable<Calendario[]> {
     return this.http
-      .get<Calendario>(this.apiURL + '/calendarios/' + calendarioId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  getConsultasPassadas(): Observable<CardMedico[]> {
-    return this.http
-      .get<CardMedico[]>(this.apiURL + '/consultasPassadas')
+      .get<Calendario[]>(this.apiURL2 + '/calendario/get?id=' + calendarioId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   getCalendariosMedico(medicoId: number): Observable<Calendario[]> {
     return this.http
-      .get<Calendario[]>(this.apiURL + '/calendario/medico/' + medicoId)
+      .get<Calendario[]>(
+        this.apiURL2 + '/calendario/getMedico?medicoId=' + medicoId
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getCalendarios(): Observable<Calendario[]> {
+  deleteCalendario(id: number): Observable<any> {
     return this.http
-      .get<Calendario[]>(this.apiURL + '/calendarios')
+      .delete<any>(this.apiURL2 + '/calendario/delete?id=' + id)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   getUserNotificacoes(userId: number): Observable<Notificacoes[]> {
     return this.http
-      .get<Notificacoes[]>(this.apiURL + '/notificacoes/user/' + userId)
+      .get<Notificacoes[]>(this.apiURL2 + '/notificacoes/get?userId=' + userId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   temNovasNotificacoes(userId: number): Observable<boolean> {
     return this.http
-      .get<Notificacoes[]>(this.apiURL + '/notificacoes/user/' + userId)
+      .get<Notificacoes[]>(this.apiURL2 + '/notificacoes/get?userId=' + userId)
       .pipe(
         retry(1),
         map((notificacoes) => {
-          const res = notificacoes.filter(
-            (notificao) => notificao.vista === false
-          );
+          const res = notificacoes.filter((notificao) => notificao.vista === 0);
           return res.length > 0;
         }),
         catchError(this.handleError)
@@ -187,45 +179,33 @@ export class RestApiService {
 
   buscaEspecialidade(especialidade: string): Observable<Medico[]> {
     return this.http
-      .get<Medico[]>(this.apiURL + '/busca/medico/' + especialidade)
+      .get<Medico[]>(
+        this.apiURL2 + '/medico/get?especialidade=' + especialidade
+      )
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  vizualizaNotificacoes(
-    notificacao: Notificacoes,
-    id: number
-  ): Observable<any> {
-    const body = JSON.stringify(notificacao);
-
+  vizualizaNotificacoes(bodyRes: any): Observable<any> {
+    const body = JSON.stringify(bodyRes);
     return this.http
-      .put<any>(this.apiURL + '/notificacoes/' + id, body, this.httpOptions)
+      .put<any>(this.apiURL2 + '/notificacoes/vizualizar', body)
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  deleteNotificacao(id: number): Observable<any> {
+  deleteNotificacao(userId: number): Observable<any> {
     return this.http
-      .delete<any>(this.apiURL + '/notificacoes/' + id, this.httpOptions)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  getNotificacoes(): Observable<Notificacoes[]> {
-    return this.http
-      .get<Notificacoes[]>(this.apiURL + '/notificacoes')
+      .delete<any>(this.apiURL2 + '/notificacoes/delete?userId=' + userId)
       .pipe(retry(1), catchError(this.handleError));
   }
 
   criarCalendario(calendario: Calendario): Observable<any> {
     const body = JSON.stringify(calendario);
-    return this.http.post(this.apiURL + '/calendarios', body, this.httpOptions);
+    return this.http.post(this.apiURL2 + '/calendario/create', body);
   }
 
   criarNotificacao(notificacao: Notificacoes): Observable<any> {
     const body = JSON.stringify(notificacao);
-    return this.http.post(
-      this.apiURL + '/notificacoes',
-      body,
-      this.httpOptions
-    );
+    return this.http.post(this.apiURL2 + '/notificacoes/create', body);
   }
 
   handleError(error: any) {

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CadastroComponent } from './cadastro.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { LibModule } from 'src/app/lib/lib.module';
+import { CadastroComponent } from './cadastro.component';
 
 @NgModule({
   declarations: [CadastroComponent],
-  imports: [CommonModule, SharedModule, LibModule],
+  imports: [CommonModule, SharedModule],
+  exports: [CadastroComponent],
 })
 export class CadastroModule {}

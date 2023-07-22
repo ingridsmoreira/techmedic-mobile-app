@@ -186,52 +186,51 @@ export class AgendaMedicoComponent implements OnInit {
         '.'
       : 'Erro ao tentar agendar sua consulta';
     const icone = sucesso ? 'check_circle_outline' : 'error_outline';
-    this.apiService.getNotificacoes().subscribe((res) => {
-      const idNotificacao = res.length + 1;
-      const novaNotificacao: Notificacoes = {
-        id: idNotificacao,
-        userId: this.userId,
-        icone,
-        mensagem: msg,
-        vista: false,
-        data: new Date(),
-      };
-      this.apiService
-        .criarNotificacao(novaNotificacao)
-        .subscribe((resNotificacao) => {
-          this.navegarProximaTela(msg);
-        });
-    });
+    const dataString = this.gerarDataString();
+
+    const novaNotificacao: Notificacoes = {
+      userId: this.userId,
+      icone,
+      mensagem: msg,
+      vista: 0,
+      data: dataString,
+    };
+    this.apiService
+      .criarNotificacao(novaNotificacao)
+      .subscribe((resNotificacao) => {
+        this.navegarProximaTela(msg);
+      });
   }
 
   navegarProximaTela(msg: string) {
     this.router.navigate(['/obrigado', msg]);
   }
 
-  agendar() {
+  gerarDataString(): string {
     const dataArray = this.diaSelecionado.split('/');
     const dataString =
+      '20' +
+      dataArray[2] +
+      '-' +
       dataArray[1] +
       '-' +
       dataArray[0] +
-      '-' +
-      dataArray[2] +
       ' ' +
       this.horarioSelecionado;
-    const dataAgendamento = new Date(dataString);
-    this.apiService.getCalendarios().subscribe((res) => {
-      const idCalendario = res.length + 1;
-      const novoCalendario: Calendario = {
-        id: idCalendario,
-        userId: this.userId,
-        medicoId: this.medicoId,
-        data: dataAgendamento,
-      };
-      this.apiService
-        .criarCalendario(novoCalendario)
-        .subscribe((resCalendario) => {
-          this.criarNotificacao(true);
-        });
-    });
+    return dataString;
+  }
+
+  agendar() {
+    const dataString = this.gerarDataString();
+    const novoCalendario: Calendario = {
+      userId: this.userId,
+      medicoId: this.medicoId,
+      data: dataString,
+    };
+    this.apiService
+      .criarCalendario(novoCalendario)
+      .subscribe((resCalendario) => {
+        this.criarNotificacao(true);
+      });
   }
 }

@@ -40,6 +40,11 @@ export class Utils {
     return dataTxt ? dataTxt : 'Data não definida';
   }
 
+  getDataHoraString(data?: string): string {
+    const dataTxt = this.datePipe.transform(data, 'dd/MM/YYYY - HH:mm');
+    return dataTxt ? dataTxt : 'Data não definida';
+  }
+
   getData(data: Date): string {
     const dataCalendario = this.datePipe.transform(data, 'dd/MM/YY');
     return dataCalendario ? dataCalendario : 'erro';

@@ -1,0 +1,15 @@
+<div class="cadastro-container">
+  <app-back-btn></app-back-btn>
+  <h1>Faça seu cadastro</h1>
+  <app-core-cadastro
+    (onCadastroEvent)="onCadastroClick($event)"
+  ></app-core-cadastro>
+  <div class="outra-opcao">
+    <app-button
+      text="Já tem uma conta? Acesse aqui."
+      design="basic"
+      icon="arrow_back_ios"
+      (click)="onLoginClick()"
+    ></app-button>
+  </div>
+</div>

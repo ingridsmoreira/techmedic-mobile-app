@@ -1,0 +1,30 @@
+<div class="cadastro">
+  <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+    <app-input-field
+      label="E-mail"
+      formControlName="email"
+      icon="mail_outline"
+    ></app-input-field>
+    <app-input-field
+      label="Nome"
+      formControlName="nome"
+      icon="person_outline"
+    ></app-input-field>
+    <app-input-field
+      label="Número de telefone"
+      formControlName="telefone"
+      icon="perm_phone_msg"
+    ></app-input-field>
+    <app-input-field
+      label="Senha"
+      type="password"
+      formControlName="password"
+      icon="lock"
+    ></app-input-field>
+    <app-button
+      text="CADASTRAR"
+      type="submit"
+      [disabled]="!cadastroForm.valid"
+    ></app-button>
+  </form>
+</div>

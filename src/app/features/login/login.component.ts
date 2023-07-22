@@ -10,7 +10,7 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onCadastroClick() {
-    this.router.navigate(['/login']);
+    this.router.navigate(['/cadastro']);
   }
 
   onLoginClick(event: boolean) {

@@ -6,6 +6,9 @@ import { ProximasConsultasModule } from './proximas-consultas/proximas-consultas
 import { ConsultasAnterioresModule } from './consultas-anteriores/consultas-anteriores.module';
 import { BuscaResModule } from './busca-res/busca-res.module';
 import { AgendaMedicoModule } from './agenda-medico/agenda-medico.module';
+import { UserFormModule } from './user-form/user-form.module';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { CadastroModule } from './cadastro/cadastro.module';
 
 @NgModule({
   declarations: [],
@@ -17,6 +20,8 @@ import { AgendaMedicoModule } from './agenda-medico/agenda-medico.module';
     ConsultasAnterioresModule,
     BuscaResModule,
     AgendaMedicoModule,
+    UserFormModule,
+    CadastroModule,
   ],
   exports: [
     LoginLibModule,
@@ -25,6 +30,8 @@ import { AgendaMedicoModule } from './agenda-medico/agenda-medico.module';
     ConsultasAnterioresModule,
     BuscaResModule,
     AgendaMedicoModule,
+    UserFormModule,
+    CadastroModule,
   ],
 })
 export class LibModule {}

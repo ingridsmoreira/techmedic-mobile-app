@@ -11,6 +11,8 @@ import { BuscaComponent } from './features/busca/busca.component';
 import { MedicoComponent } from './features/medico/medico.component';
 import { ObrigadoComponent } from './features/obrigado/obrigado.component';
 import { CalendarioAgendadoComponent } from './features/calendario-agendado/calendario-agendado.component';
+import { UsuarioComponent } from './features/usuario/usuario.component';
+import { CadastroComponent } from './features/cadastro/cadastro.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -22,6 +24,11 @@ const routes: Routes = [
   {
     path: 'welcome',
     component: WelcomeComponent,
+    pathMatch: 'full',
+  },
+  {
+    path: 'cadastro',
+    component: CadastroComponent,
     pathMatch: 'full',
   },
   {
@@ -66,6 +73,10 @@ const routes: Routes = [
   {
     path: 'obrigado/:msg',
     component: ObrigadoComponent,
+  },
+  {
+    path: 'usuario',
+    component: UsuarioComponent,
   },
 ];
 

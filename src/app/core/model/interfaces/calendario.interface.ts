@@ -1,6 +1,6 @@
 export interface Calendario {
-  id: number;
+  id?: number;
   userId: number;
   medicoId: number;
-  data: Date;
+  data: string;
 }

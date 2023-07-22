@@ -1,8 +1,8 @@
 export interface User {
-  username: string;
+  email: string;
   nome: string;
-  numero: string;
-  userId?: number;
+  telefone: string;
+  id?: number;
   senha?: string;
   isLoggedIn?: boolean;
   photoUrl?: string;

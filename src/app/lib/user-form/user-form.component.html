@@ -1,0 +1,29 @@
+<div class="form">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <div class="input">
+      <app-input-field label="Nome" formControlName="nome"></app-input-field>
+    </div>
+    <div class="input">
+      <app-input-field label="E-mail" formControlName="email"></app-input-field>
+    </div>
+    <div class="input">
+      <app-input-field
+        label="Telefone"
+        formControlName="telefone"
+        type="number"
+      ></app-input-field>
+    </div>
+    <div class="input">
+      <app-input-field
+        label="Senha"
+        type="password"
+        formControlName="senha"
+      ></app-input-field>
+    </div>
+    <app-button
+      [text]="submitName"
+      type="submit"
+      [disabled]="!userForm.valid"
+    ></app-button>
+  </form>
+</div>

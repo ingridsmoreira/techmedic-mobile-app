@@ -12,4 +12,8 @@ export class WelcomeComponent {
   onLoginClick() {
     this.router.navigate(['/login']);
   }
+
+  onCadastroClick() {
+    this.router.navigate(['/cadastro']);
+  }
 }

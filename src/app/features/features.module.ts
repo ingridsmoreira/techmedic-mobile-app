@@ -11,6 +11,8 @@ import { BuscaModule } from './busca/busca.module';
 import { MedicoModule } from './medico/medico.module';
 import { ObrigadoModule } from './obrigado/obrigado.module';
 import { CalendarioAgendadoModule } from './calendario-agendado/calendario-agendado.module';
+import { UsuarioModule } from './usuario/usuario.module';
+import { CadastroModule } from './cadastro/cadastro.module';
 
 @NgModule({
   imports: [
@@ -26,6 +28,8 @@ import { CalendarioAgendadoModule } from './calendario-agendado/calendario-agend
     MedicoModule,
     ObrigadoModule,
     CalendarioAgendadoModule,
+    UsuarioModule,
+    CadastroModule,
   ],
 })
 export class FeaturesModule {}

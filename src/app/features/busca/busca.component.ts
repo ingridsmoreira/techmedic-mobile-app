@@ -25,12 +25,10 @@ export class BuscaComponent {
   }
 
   buscaItems() {
-    console.log(this.medicosEncontrados);
     this.medicosEncontrados = [];
     const buscaTratada = this.inputBusca.toLowerCase();
     this.apiService.buscaEspecialidade(buscaTratada).subscribe((data) => {
       this.medicosEncontrados = [...data];
     });
-    console.log(this.medicosEncontrados);
   }
 }

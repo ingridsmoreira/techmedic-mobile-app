@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
 
@@ -17,28 +18,27 @@ export class NotificacoesComponent {
   }
 
   listarNotificacoes() {
-    this.apiService.getUserNotificacoes(this.userId).subscribe((data) => {
-      this.notificacoes = data;
-      this.notificacaoLoaded = Promise.resolve(true);
-      data.forEach((notificao) => {
-        if (notificao.vista === false) {
-          const notificacaoAtualizada = { ...notificao, vista: true };
-          this.apiService
-            .vizualizaNotificacoes(notificacaoAtualizada, notificao.id)
-            .subscribe((data) => {});
+    this.apiService
+      .getUserNotificacoes(this.userId)
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.notificacoes = data;
+        this.notificacaoLoaded = Promise.resolve(true);
+        const body = { userId: this.userId };
+        const result = data.filter((notificacao) => notificacao.vista === 0);
+        if (result.length > 0) {
+          this.apiService.vizualizaNotificacoes(body).subscribe((data) => {});
         }
       });
-    });
   }
 
   apagarNotificacoes() {
-    this.notificacoes.forEach((notificacao) => {
-      this.apiService.deleteNotificacao(notificacao.id).subscribe((data) => {
-        this.notificacoes = this.notificacoes.filter(
-          (notificacao) => notificacao.id !== data.id
-        );
+    this.apiService
+      .deleteNotificacao(this.userId)
+      .pipe(take(1))
+      .subscribe((data) => {
+        this.notificacoes = [];
       });
-    });
     this.listarNotificacoes();
   }
 }

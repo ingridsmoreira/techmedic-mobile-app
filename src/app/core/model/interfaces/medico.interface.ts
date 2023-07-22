@@ -17,6 +17,6 @@ export interface CardMedico {
   nome: string;
   especialidade: Especialidades;
   photoUrl: string;
-  data?: Date;
+  data?: string;
   tipo: cardMedico;
 }

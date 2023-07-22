@@ -27,8 +27,8 @@ export class MedicoComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.apiService.getMedico(this.id).subscribe((data) => {
-      this.medico = data;
+    this.apiService.getMedico(this.id).subscribe((data: Medico[]) => {
+      this.medico = data[0];
       this.medicoLoaded = Promise.resolve(true);
     });
   }

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
 import { Utils } from 'src/app/shared/utils/utils';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-calendario-agendado',
@@ -20,7 +23,9 @@ export class CalendarioAgendadoComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private apiService: RestApiService,
-    private utils: Utils
+    private utils: Utils,
+    public dialog: MatDialog,
+    private location: Location
   ) {
     // this.buscaItems();
   }
@@ -34,8 +39,8 @@ export class CalendarioAgendadoComponent implements OnInit {
       .getCalendario(this.idCalendario)
       .pipe(take(1))
       .subscribe((calend) => {
-        this.calendario = calend;
-        this.getDadosMedicos(calend.medicoId);
+        this.calendario = calend[0];
+        this.getDadosMedicos(calend[0].medicoId);
       });
   }
 
@@ -44,7 +49,7 @@ export class CalendarioAgendadoComponent implements OnInit {
       .getMedico(medicoId)
       .pipe(take(1))
       .subscribe((med) => {
-        this.medico = med;
+        this.medico = med[0];
         this.medicoLoaded = Promise.resolve(true);
       });
   }
@@ -83,6 +88,28 @@ export class CalendarioAgendadoComponent implements OnInit {
   }
 
   cancelarAgendamento() {
-    console.log('cancela');
+    const dialogRef = this.dialog.open(DialogConfirmacao);
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result) => {
+        if (result) {
+          this.apiService
+            .deleteCalendario(this.idCalendario)
+            .pipe(take(1))
+            .subscribe((data) => {
+              this.location.back();
+            });
+        }
+      });
   }
 }
+
+@Component({
+  selector: 'dialog-content-example-dialog',
+  templateUrl: 'calendario-delete-confirm.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+export class DialogConfirmacao {}

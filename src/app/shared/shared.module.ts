@@ -9,8 +9,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FooterMenuModule } from './footer-menu/footer-menu.module';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { EspecialidadesModule } from './especialidades/especialidades.module';
-import { ProximasConsultasModule } from '../lib/proximas-consultas/proximas-consultas.module';
 import { NotificacaoModule } from './notificacao/notificacao.module';
+import { MatDialogModule } from '@angular/material/dialog';
 import { CardMedicoModule } from './card-medico/card-medico.module';
 
 @NgModule({
@@ -27,6 +27,7 @@ import { CardMedicoModule } from './card-medico/card-medico.module';
     EspecialidadesModule,
     NotificacaoModule,
     CardMedicoModule,
+    MatDialogModule,
   ],
   exports: [
     InputFieldModule,

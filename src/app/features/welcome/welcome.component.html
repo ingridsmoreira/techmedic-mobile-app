@@ -9,7 +9,10 @@
     </p>
   </div>
   <div class="welcome-btn">
-    <app-button text="CRIAR CONTA COM EMAIL"></app-button>
+    <app-button
+      text="CRIAR CONTA COM EMAIL"
+      (click)="onCadastroClick()"
+    ></app-button>
     <app-button
       text="ACESSAR COM FACEBOOK"
       color="basic"
