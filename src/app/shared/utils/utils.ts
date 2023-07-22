@@ -1,12 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { Especialidades } from 'src/app/core/model/enum/especialidades';
+import { Medico } from 'src/app/core/model/interfaces/medico.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Utils {
-  constructor(private datePipe: DatePipe) {}
+  constructor(private datePipe: DatePipe, private calendar: Calendar) {}
 
   getEspecialidade(especialidade: Especialidades, sexo: string): string {
     switch (especialidade) {
@@ -62,5 +64,24 @@ export class Utils {
       default:
         return 'Sab';
     }
+  }
+
+  gerarNomeMedico(medico: Medico): string {
+    const titulo = medico.sexo === 'M' ? 'Dr. ' : 'Dra. ';
+    return titulo + ' ' + medico.nome;
+  }
+
+  adicionarAgendamentoNoCalendario(dateString: string, nomeMedico: string) {
+    const titulo = 'Consulta - ' + nomeMedico;
+    const dataDaConsulta = new Date(dateString);
+    const fimDaConsulta = dataDaConsulta;
+    fimDaConsulta.setHours(fimDaConsulta.getHours() + 1);
+    this.calendar.createEventInteractively(
+      titulo, // title
+      'Online', // location
+      undefined, // notes
+      dataDaConsulta, // start date
+      fimDaConsulta // end date
+    );
   }
 }

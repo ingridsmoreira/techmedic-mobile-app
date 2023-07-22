@@ -44,7 +44,9 @@ export class CardMedicoComponent {
   onClick() {
     switch (this.cardMedico.tipo) {
       case cardMedico.calendario:
-        console.log('Clicou no calendário');
+        this.router.navigate([
+          '/calendario/agendado/' + this.cardMedico.calendarioId,
+        ]);
         break;
       case cardMedico.busca:
       default:

@@ -7,6 +7,7 @@ import { SharedModule } from './shared/shared.module';
 import { FeaturesModule } from './features/features.module';
 import { LibModule } from './lib/lib.module';
 import { StateModule } from './core/state/state.module';
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +20,7 @@ import { StateModule } from './core/state/state.module';
     LibModule,
     StateModule,
   ],
-  providers: [],
+  providers: [Calendar],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
