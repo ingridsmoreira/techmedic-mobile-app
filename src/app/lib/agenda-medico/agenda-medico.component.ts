@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
+import { NotificacoesService } from 'src/app/core/services/notificacoes.service';
+import { NotificacoesActions } from 'src/app/core/state/actions/notificacoes.actions';
 import { Utils } from 'src/app/shared/utils/utils';
 
 export interface AgendaMedico {
@@ -54,7 +57,9 @@ export class AgendaMedicoComponent implements OnInit {
   constructor(
     private apiService: RestApiService,
     private utils: Utils,
-    private router: Router
+    private router: Router,
+    private store: Store,
+    private notificacoesService: NotificacoesService
   ) {}
 
   ngOnInit(): void {
@@ -195,9 +200,12 @@ export class AgendaMedicoComponent implements OnInit {
       vista: 0,
       data: dataString,
     };
-    this.apiService
-      .criarNotificacao(novaNotificacao)
-      .subscribe((resNotificacao) => {
+    this.notificacoesService
+      .createNotificacoes(novaNotificacao)
+      .subscribe((resNotificacao: Notificacoes[]) => {
+        this.store.dispatch(
+          NotificacoesActions.getNotificacoes({ notificacoes: resNotificacao })
+        );
         this.navegarProximaTela(msg);
       });
   }

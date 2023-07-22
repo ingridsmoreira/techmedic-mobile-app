@@ -2,7 +2,7 @@ import { createReducer, on, ActionCreator } from '@ngrx/store';
 import { User } from '../../model/interfaces/user.interface';
 import { UserActions } from '../actions/user.actions';
 
-export const initialStateUser: User = {
+const initialState: User = {
   email: '',
   nome: '',
   telefone: '',
@@ -11,13 +11,13 @@ export const initialStateUser: User = {
 };
 
 export const userReducer = createReducer(
-  initialStateUser,
+  initialState,
   on(UserActions.createUser, (_state, { user }) => ({
     ...user,
     isLoggedIn: true,
   })),
   on(UserActions.loginUser, (_state, { user }) => {
-    return user !== null ? { ...user, isLoggedIn: true } : initialStateUser;
+    return user !== null ? { ...user, isLoggedIn: true } : initialState;
   }),
   on(UserActions.updateUser, (_state, { user }) => ({
     ...user,

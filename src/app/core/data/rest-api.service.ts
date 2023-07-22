@@ -35,29 +35,6 @@ export class RestApiService {
 
   //user
 
-  getUser(userId: number): Observable<User[]> {
-    return this.http
-      .get<User[]>(this.apiURL2 + '/user/get?id=' + userId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  loginUser(login: User): Observable<User> {
-    login.senha = login?.senha ? this.md5(login?.senha) : '';
-    return this.http
-      .post<any>(
-        this.apiURL2 + '/user/login',
-        JSON.stringify(login),
-        this.httpOptions
-      )
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  createUser(user: any): Observable<User> {
-    return this.http
-      .post<any>(this.apiURL2 + '/user/create', JSON.stringify(user))
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   getCalendarioUser(userId: number): Observable<Calendario[]> {
     return this.http
       .get<Calendario[]>(this.apiURL2 + '/calendario/getUser?userId=' + userId)
@@ -154,25 +131,6 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  getUserNotificacoes(userId: number): Observable<Notificacoes[]> {
-    return this.http
-      .get<Notificacoes[]>(this.apiURL2 + '/notificacoes/get?userId=' + userId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  temNovasNotificacoes(userId: number): Observable<boolean> {
-    return this.http
-      .get<Notificacoes[]>(this.apiURL2 + '/notificacoes/get?userId=' + userId)
-      .pipe(
-        retry(1),
-        map((notificacoes) => {
-          const res = notificacoes.filter((notificao) => notificao.vista === 0);
-          return res.length > 0;
-        }),
-        catchError(this.handleError)
-      );
-  }
-
   buscaEspecialidade(especialidade: string): Observable<Medico[]> {
     return this.http
       .get<Medico[]>(
@@ -181,27 +139,9 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  vizualizaNotificacoes(bodyRes: any): Observable<any> {
-    const body = JSON.stringify(bodyRes);
-    return this.http
-      .put<any>(this.apiURL2 + '/notificacoes/vizualizar', body)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  deleteNotificacao(userId: number): Observable<any> {
-    return this.http
-      .delete<any>(this.apiURL2 + '/notificacoes/delete?userId=' + userId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   criarCalendario(calendario: Calendario): Observable<any> {
     const body = JSON.stringify(calendario);
     return this.http.post(this.apiURL2 + '/calendario/create', body);
-  }
-
-  criarNotificacao(notificacao: Notificacoes): Observable<any> {
-    const body = JSON.stringify(notificacao);
-    return this.http.post(this.apiURL2 + '/notificacoes/create', body);
   }
 
   handleError(error: any) {

@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { firstValueFrom, take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
+import { User } from 'src/app/core/model/interfaces/user.interface';
+import { UserService } from 'src/app/core/services/user.service';
+import { selectUser } from 'src/app/core/state/selectors/user.selectors';
 
 @Component({
   selector: 'app-user-form',
@@ -16,9 +20,21 @@ export class UserFormComponent implements OnInit {
   formSucess: boolean = false;
   @Output() onFormSuccessEvent = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private apiService: RestApiService) {
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserService,
+    private store: Store
+  ) {
     if (this.tipo === 'editar') {
-      this.carregarUser();
+      this.store.select(selectUser).subscribe((user: User) => {
+        if (user.id) {
+          this.userForm.controls['nome'].setValue(user.nome);
+          this.userForm.controls['email'].setValue(user.email);
+          this.userForm.controls['telefone'].setValue(user.telefone);
+        } else {
+          // retorna welcome
+        }
+      });
     }
   }
 
@@ -32,18 +48,9 @@ export class UserFormComponent implements OnInit {
     });
   }
 
-  async carregarUser() {
-    await firstValueFrom(this.apiService.getUser(this.userId)).then((user) => {
-      this.userForm.controls['nome'].setValue(user[0].nome);
-      this.userForm.controls['email'].setValue(user[0].email);
-      this.userForm.controls['telefone'].setValue(user[0].telefone);
-    });
-  }
-
   onSubmit() {
     if (this.userForm.valid) {
       if (this.tipo === 'editar') {
-        console.log(this.userForm.value);
         // Adicione aqui a lógica para autenticar o usuário
         // checa login, e redireciona se for true
         this.formSucess = true;

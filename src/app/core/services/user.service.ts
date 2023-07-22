@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, retry } from 'rxjs';
 import { User } from '../model/interfaces/user.interface';
-import { apiConstants, handleError } from './default.service';
+import { apiConstants } from './default.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -17,13 +17,13 @@ export class UserService {
   loginUser(login: User): Observable<User[]> {
     return this.http
       .post<User[]>(apiConstants.apiUrl + '/user/login', JSON.stringify(login))
-      .pipe(map((user) => user || null));
+      .pipe(map((user) => user || []));
   }
 
   createUser(user: User): Observable<User[]> {
     return this.http
       .post<User[]>(apiConstants.apiUrl + '/user/create', JSON.stringify(user))
-      .pipe(map((user) => user || null));
+      .pipe(map((user) => user || []));
   }
 
   updateUser(user: User): Observable<User> {

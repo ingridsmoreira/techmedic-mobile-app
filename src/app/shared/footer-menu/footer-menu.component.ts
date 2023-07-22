@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { RestApiService } from 'src/app/core/data/rest-api.service';
+import { Store } from '@ngrx/store';
+import { selectNovasNotificacoes } from 'src/app/core/state/selectors/notificacoes.selectors';
 
 @Component({
   selector: 'app-footer-menu',
@@ -11,9 +12,9 @@ export class FooterMenuComponent {
   userId = 1;
   temNovasNotificacoes = false;
 
-  constructor(private router: Router, private apiService: RestApiService) {
-    this.apiService.temNovasNotificacoes(this.userId).subscribe((data) => {
-      this.temNovasNotificacoes = data;
+  constructor(private router: Router, private store: Store) {
+    this.store.select(selectNovasNotificacoes).subscribe((data) => {
+      this.temNovasNotificacoes = data.length > 0;
     });
   }
 
