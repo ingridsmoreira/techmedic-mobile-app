@@ -41,18 +41,18 @@ export class RestApiService {
       .pipe(retry(1), catchError(this.handleError));
   }
 
-  // Medico
-  getAllMedicos(): Observable<Medico[]> {
-    return this.http
-      .get<Medico[]>(this.apiURL2 + '/medico/all')
-      .pipe(retry(1), catchError(this.handleError));
-  }
+  // // Medico
+  // getAllMedicos(): Observable<Medico[]> {
+  //   return this.http
+  //     .get<Medico[]>(this.apiURL2 + '/medico/all')
+  //     .pipe(retry(1), catchError(this.handleError));
+  // }
 
-  getMedico(medicoId: number): Observable<Medico[]> {
-    return this.http
-      .get<Medico[]>(this.apiURL2 + '/medico/get?medicoId=' + medicoId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
+  // getMedico(medicoId: number): Observable<Medico[]> {
+  //   return this.http
+  //     .get<Medico[]>(this.apiURL2 + '/medico/get?medicoId=' + medicoId)
+  //     .pipe(retry(1), catchError(this.handleError));
+  // }
 
   async getUserCalendarioCard(userId: number): Promise<CardMedico[]> {
     let medicos: Medico[] = [];
@@ -128,14 +128,6 @@ export class RestApiService {
   deleteCalendario(id: number): Observable<any> {
     return this.http
       .delete<any>(this.apiURL2 + '/calendario/delete?id=' + id)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  buscaEspecialidade(especialidade: string): Observable<Medico[]> {
-    return this.http
-      .get<Medico[]>(
-        this.apiURL2 + '/medico/get?especialidade=' + especialidade
-      )
       .pipe(retry(1), catchError(this.handleError));
   }
 

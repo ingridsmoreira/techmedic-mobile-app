@@ -13,7 +13,11 @@ export class NotificacoesService {
       .get<Notificacoes[]>(
         apiConstants.apiUrl + '/notificacoes/get?id=' + userId
       )
-      .pipe(map((notificacoes) => notificacoes || []));
+      .pipe(
+        map((notificacoes) => {
+          return notificacoes || [];
+        })
+      );
   }
 
   createNotificacoes(notificacao: Notificacoes): Observable<Notificacoes[]> {

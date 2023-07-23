@@ -30,14 +30,16 @@ export class HeaderMenuComponent {
       .subscribe((user) => {
         if (user?.id) {
           this.user = user;
+          this.checarNotificacoes();
         } else {
           const userId = sessionStorage.getItem('userId');
           if (userId) {
-            userService
+            this.userService
               .getUser(Number(userId))
               .pipe(take(1))
               .subscribe((user: User[]) => {
                 this.user = user[0];
+                this.checarNotificacoes();
               });
           } else {
             // retorna welcome

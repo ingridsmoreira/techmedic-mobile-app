@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Medico } from 'src/app/core/model/interfaces/medico.interface';
+import { MedicoService } from 'src/app/core/services/medico.service';
 
 @Component({
   selector: 'app-busca',
@@ -14,7 +14,7 @@ export class BuscaComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: RestApiService
+    private medicoService: MedicoService
   ) {
     this.buscaItems();
   }
@@ -27,8 +27,10 @@ export class BuscaComponent {
   buscaItems() {
     this.medicosEncontrados = [];
     const buscaTratada = this.inputBusca.toLowerCase();
-    this.apiService.buscaEspecialidade(buscaTratada).subscribe((data) => {
-      this.medicosEncontrados = [...data];
-    });
+    this.medicoService
+      .buscaEspecialidade(buscaTratada)
+      .subscribe((medico: Medico[]) => {
+        this.medicosEncontrados = [...medico];
+      });
   }
 }
