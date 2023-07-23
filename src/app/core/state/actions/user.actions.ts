@@ -1,4 +1,4 @@
-import { Action, createActionGroup, props } from '@ngrx/store';
+import { createActionGroup, props } from '@ngrx/store';
 import { User } from '../../model/interfaces/user.interface';
 
 export const UserActions = createActionGroup({

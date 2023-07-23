@@ -11,7 +11,7 @@
     <h3 class="titulos">Informacoes profissionais</h3>
     <div class="dados-medico">
       <div class="foto-perfil-wrapper">
-        <img src="{{ medico.photoUrl }}" />
+        <img src="{{ medico?.photoUrl }}" />
       </div>
 
       <div class="titulo-wrapper">
@@ -21,7 +21,7 @@
 
       <div class="desc-wrapper">
         <h3>Descriçāo:</h3>
-        <p>{{ medico.descricao }}</p>
+        <p>{{ medico?.descricao }}</p>
       </div>
     </div>
     <div class="btn-agendar">

@@ -35,12 +35,6 @@ export class RestApiService {
 
   //user
 
-  getCalendarioUser(userId: number): Observable<Calendario[]> {
-    return this.http
-      .get<Calendario[]>(this.apiURL2 + '/calendario/getUser?userId=' + userId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
   // // Medico
   // getAllMedicos(): Observable<Medico[]> {
   //   return this.http
@@ -53,88 +47,6 @@ export class RestApiService {
   //     .get<Medico[]>(this.apiURL2 + '/medico/get?medicoId=' + medicoId)
   //     .pipe(retry(1), catchError(this.handleError));
   // }
-
-  async getUserCalendarioCard(userId: number): Promise<CardMedico[]> {
-    let medicos: Medico[] = [];
-    let calendarioUser: Calendario[] = [];
-    await firstValueFrom(this.getCalendarioUser(userId)).then(
-      (calend) => (calendarioUser = calend)
-    );
-    await firstValueFrom(this.getAllMedicos()).then(
-      (listaMedicos) => (medicos = listaMedicos)
-    );
-    const cardsMedicos: CardMedico[] = [];
-    calendarioUser.forEach((calendario) => {
-      const medico = medicos.filter((med) => med.id === calendario.medicoId)[0];
-      const novoCard: CardMedico = {
-        calendarioId: calendario.id,
-        medicoId: medico.id,
-        sexo: medico.sexo,
-        nome: medico.nome,
-        especialidade: medico.especialidade,
-        photoUrl: medico.photoUrl,
-        data: calendario.data,
-        tipo: cardMedico.calendario,
-      };
-      cardsMedicos.push(novoCard);
-    });
-    return cardsMedicos;
-  }
-
-  async getProximasConsultasUser(userId: number): Promise<CardMedico[]> {
-    let calendarioUser: CardMedico[] = [];
-    await this.getUserCalendarioCard(userId).then(
-      (calend) => (calendarioUser = calend)
-    );
-    const agora = new Date();
-    return calendarioUser.filter((calendario) => {
-      if (calendario.data) {
-        const dataDoCalendartio = new Date(calendario.data.toString());
-        return dataDoCalendartio > agora;
-      }
-      return false;
-    });
-  }
-
-  async getConsultasPassadasUser(userId: number): Promise<CardMedico[]> {
-    let calendarioUser: CardMedico[] = [];
-    await this.getUserCalendarioCard(userId).then(
-      (calend) => (calendarioUser = calend)
-    );
-    const agora = new Date();
-    return calendarioUser.filter((calendario) => {
-      if (calendario.data) {
-        const dataDoCalendartio = new Date(calendario.data.toString());
-        return dataDoCalendartio < agora;
-      }
-      return false;
-    });
-  }
-
-  getCalendario(calendarioId: number): Observable<Calendario[]> {
-    return this.http
-      .get<Calendario[]>(this.apiURL2 + '/calendario/get?id=' + calendarioId)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  getCalendariosMedico(medicoId: number): Observable<Calendario[]> {
-    return this.http
-      .get<Calendario[]>(
-        this.apiURL2 + '/calendario/getMedico?medicoId=' + medicoId
-      )
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  deleteCalendario(id: number): Observable<any> {
-    return this.http
-      .delete<any>(this.apiURL2 + '/calendario/delete?id=' + id)
-      .pipe(retry(1), catchError(this.handleError));
-  }
-
-  criarCalendario(calendario: Calendario): Observable<any> {
-    const body = JSON.stringify(calendario);
-    return this.http.post(this.apiURL2 + '/calendario/create', body);
-  }
 
   handleError(error: any) {
     let errorMessage = '';

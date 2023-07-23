@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Especialidades } from 'src/app/core/model/enum/especialidades';
 import { Medico } from 'src/app/core/model/interfaces/medico.interface';
+import { MedicoService } from 'src/app/core/services/medico.service';
 import { Utils } from 'src/app/shared/utils/utils';
 
 @Component({
@@ -16,7 +17,7 @@ export class MedicoComponent implements OnInit {
   medico: any;
 
   constructor(
-    private apiService: RestApiService,
+    private medicoService: MedicoService,
     private route: ActivatedRoute,
     private router: Router,
     private utils: Utils
@@ -27,7 +28,7 @@ export class MedicoComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    this.apiService.getMedico(this.id).subscribe((data: Medico[]) => {
+    this.medicoService.getMedico(this.id).subscribe((data: Medico[]) => {
       this.medico = data[0];
       this.medicoLoaded = Promise.resolve(true);
     });

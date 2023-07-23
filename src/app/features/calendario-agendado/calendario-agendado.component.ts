@@ -3,10 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { take } from 'rxjs';
-import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
 import { Utils } from 'src/app/shared/utils/utils';
 import { MatButtonModule } from '@angular/material/button';
+import { CalendarioService } from 'src/app/core/services/calendario.service';
+import { Medico } from 'src/app/core/model/interfaces/medico.interface';
+import { Store } from '@ngrx/store';
+import { selectMedico } from 'src/app/core/state/selectors/medico.selectors';
+import { selectCalendario } from 'src/app/core/state/selectors/calendario.selectors';
+import { CalendarioActions } from 'src/app/core/state/actions/calendario.actions';
 
 @Component({
   selector: 'app-calendario-agendado',
@@ -14,47 +19,50 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./calendario-agendado.component.sass'],
 })
 export class CalendarioAgendadoComponent implements OnInit {
-  userId = 1;
   idCalendario = this.route.snapshot.params['idCalendario'];
-  calendario: any;
-  medico: any;
+  calendario?: Calendario;
+  medico?: Medico;
   medicoLoaded: Promise<boolean> = Promise.resolve(false);
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: RestApiService,
+    private store: Store,
+    private calendarioService: CalendarioService,
     private utils: Utils,
     public dialog: MatDialog,
     private location: Location
-  ) {
-    // this.buscaItems();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.gerarInfo();
   }
 
   gerarInfo() {
-    this.apiService
-      .getCalendario(this.idCalendario)
+    this.store
+      .select(selectCalendario)
       .pipe(take(1))
-      .subscribe((calend) => {
-        this.calendario = calend[0];
-        this.getDadosMedicos(calend[0].medicoId);
+      .subscribe((calendarios) => {
+        this.calendario = calendarios.filter(
+          (calend) => calend.id === this.idCalendario
+        )[0];
+        this.getDadosMedicos(this.calendario.medicoId);
       });
   }
 
   getDadosMedicos(medicoId: number) {
-    this.apiService
-      .getMedico(medicoId)
+    this.store
+      .select(selectMedico)
       .pipe(take(1))
-      .subscribe((med) => {
-        this.medico = med[0];
+      .subscribe((medicos) => {
+        this.medico = medicos.filter((med) => med.id === medicoId)[0];
         this.medicoLoaded = Promise.resolve(true);
       });
   }
 
   getEspecialidadeStr(): string {
+    while (!this.medico) {
+      this.getEspecialidadeStr();
+    }
     return this.utils.getEspecialidade(
       this.medico.especialidade,
       this.medico.sexo
@@ -62,25 +70,40 @@ export class CalendarioAgendadoComponent implements OnInit {
   }
 
   getTituloMedico(): string {
+    while (!this.medico) {
+      this.getTituloMedico();
+    }
     return this.utils.getTituloMedico(this.medico.sexo);
   }
 
   getHoraConsulta(): string {
-    return this.utils.getDataHora(this.calendario.data);
+    while (!this.calendario) {
+      this.getHoraConsulta();
+    }
+    return this.utils.getDataHoraString(this.calendario.data);
   }
 
   checaHoras(): boolean {
+    while (!this.calendario) {
+      this.checaHoras();
+    }
     const dataDoCalendartio = new Date(this.calendario.data.toString());
     const dataAtual = new Date();
     return dataDoCalendartio > dataAtual;
   }
 
   geraNomeMedico(): string {
+    while (!this.medico) {
+      this.geraNomeMedico();
+    }
     const nome = this.utils.gerarNomeMedico(this.medico);
     return nome;
   }
 
   adicionarAoCalendario() {
+    while (!this.calendario) {
+      this.adicionarAoCalendario();
+    }
     this.utils.adicionarAgendamentoNoCalendario(
       this.calendario.data.toString(),
       this.geraNomeMedico()
@@ -95,10 +118,13 @@ export class CalendarioAgendadoComponent implements OnInit {
       .pipe(take(1))
       .subscribe((result) => {
         if (result) {
-          this.apiService
+          this.calendarioService
             .deleteCalendario(this.idCalendario)
             .pipe(take(1))
-            .subscribe((data) => {
+            .subscribe((calendario) => {
+              this.store.dispatch(
+                CalendarioActions.getUserCalendario({ calendario })
+              );
               this.location.back();
             });
         }

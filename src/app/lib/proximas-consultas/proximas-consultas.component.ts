@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RestApiService } from 'src/app/core/data/rest-api.service';
-import { cardMedico } from 'src/app/core/model/enum/cardMedico';
-import { Especialidades } from 'src/app/core/model/enum/especialidades';
 import { CardMedico } from 'src/app/core/model/interfaces/medico.interface';
+import { CalendarioService } from 'src/app/core/services/calendario.service';
 
 @Component({
   selector: 'app-proximas-consultas',
@@ -13,11 +11,11 @@ export class ProximasConsultasComponent implements OnInit {
   consultas: CardMedico[] = [];
   userId = 1;
 
-  constructor(private apiService: RestApiService) {}
+  constructor(private calendarioService: CalendarioService) {}
 
   ngOnInit(): void {
-    this.apiService
-      .getProximasConsultasUser(this.userId)
+    this.calendarioService
+      .getConsultas('futuro')
       .then((consultas) => (this.consultas = consultas));
   }
 }

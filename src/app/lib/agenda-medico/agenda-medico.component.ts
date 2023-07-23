@@ -5,7 +5,9 @@ import { map } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
+import { CalendarioService } from 'src/app/core/services/calendario.service';
 import { NotificacoesService } from 'src/app/core/services/notificacoes.service';
+import { CalendarioActions } from 'src/app/core/state/actions/calendario.actions';
 import { NotificacoesActions } from 'src/app/core/state/actions/notificacoes.actions';
 import { Utils } from 'src/app/shared/utils/utils';
 
@@ -55,7 +57,7 @@ export class AgendaMedicoComponent implements OnInit {
   ];
 
   constructor(
-    private apiService: RestApiService,
+    private calendarioService: CalendarioService,
     private utils: Utils,
     private router: Router,
     private store: Store,
@@ -63,14 +65,16 @@ export class AgendaMedicoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.apiService.getCalendariosMedico(this.medicoId).subscribe((data) => {
-      this.calendarios = data;
-      this.gerarAgenda();
-      this.removerHorariosPassados();
-      this.removerHorariosOcupados();
-      this.pegaDatas();
-      this.calendarioLoaded = Promise.resolve(true);
-    });
+    this.calendarioService
+      .getCalendarioMedico(this.medicoId)
+      .subscribe((data) => {
+        this.calendarios = data;
+        this.gerarAgenda();
+        this.removerHorariosPassados();
+        this.removerHorariosOcupados();
+        this.pegaDatas();
+        this.calendarioLoaded = Promise.resolve(true);
+      });
   }
 
   gerarAgenda(): void {
@@ -235,9 +239,12 @@ export class AgendaMedicoComponent implements OnInit {
       medicoId: this.medicoId,
       data: dataString,
     };
-    this.apiService
+    this.calendarioService
       .criarCalendario(novoCalendario)
-      .subscribe((resCalendario) => {
+      .subscribe((calendario) => {
+        this.store.dispatch(
+          CalendarioActions.getUserCalendario({ calendario })
+        );
         this.criarNotificacao(true);
       });
   }
