@@ -11,7 +11,7 @@ export class NotificacoesService {
   getNotificacoes(userId: number): Observable<Notificacoes[]> {
     return this.http
       .get<Notificacoes[]>(
-        apiConstants.apiUrl + '/notificacoes/get?id=' + userId
+        apiConstants.apiUrl + '/notificacoes/get?userId=' + userId
       )
       .pipe(
         map((notificacoes) => {

@@ -18,7 +18,7 @@ import { CalendarioActions } from 'src/app/core/state/actions/calendario.actions
   templateUrl: './calendario-agendado.component.html',
   styleUrls: ['./calendario-agendado.component.sass'],
 })
-export class CalendarioAgendadoComponent implements OnInit {
+export class CalendarioAgendadoComponent {
   idCalendario = this.route.snapshot.params['idCalendario'];
   calendario?: Calendario;
   medico?: Medico;
@@ -31,22 +31,18 @@ export class CalendarioAgendadoComponent implements OnInit {
     private utils: Utils,
     public dialog: MatDialog,
     private location: Location
-  ) {}
-
-  ngOnInit(): void {
-    this.gerarInfo();
-  }
-
-  gerarInfo() {
-    this.store
-      .select(selectCalendario)
-      .pipe(take(1))
-      .subscribe((calendarios) => {
-        this.calendario = calendarios.filter(
-          (calend) => calend.id === this.idCalendario
-        )[0];
-        this.getDadosMedicos(this.calendario.medicoId);
-      });
+  ) {
+    this.store.select(selectCalendario).subscribe((calendarios) => {
+      const calendario = calendarios.find(
+        (calend) => calend.id === +this.idCalendario
+      );
+      if (!calendario) {
+        console.error(`Calendário com ID ${this.idCalendario} não encontrado`);
+        return;
+      }
+      this.calendario = calendario;
+      this.getDadosMedicos(this.calendario.medicoId);
+    });
   }
 
   getDadosMedicos(medicoId: number) {
@@ -121,9 +117,9 @@ export class CalendarioAgendadoComponent implements OnInit {
           this.calendarioService
             .deleteCalendario(this.idCalendario)
             .pipe(take(1))
-            .subscribe((calendario) => {
+            .subscribe((calendarios) => {
               this.store.dispatch(
-                CalendarioActions.getUserCalendario({ calendario })
+                CalendarioActions.getUserCalendario({ calendarios })
               );
               this.location.back();
             });

@@ -13,6 +13,7 @@ export const apiConstants = {
       key: 'x-api-key',
     }),
   },
+  key: '6d207e02198a847aa98d0a2a901485a5',
 };
 
 export function handleError(error: any): any {

@@ -4,6 +4,6 @@ import { Calendario } from '../../model/interfaces/calendario.interface';
 export const CalendarioActions = createActionGroup({
   source: 'Calendario',
   events: {
-    'Get User Calendario': props<{ calendario: Calendario[] }>(),
+    'Get User Calendario': props<{ calendarios: ReadonlyArray<Calendario> }>(),
   },
 });

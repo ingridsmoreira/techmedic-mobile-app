@@ -15,6 +15,7 @@ import { selectCalendario } from '../state/selectors/calendario.selectors';
 import { CardMedico } from '../model/interfaces/medico.interface';
 import { selectMedico } from '../state/selectors/medico.selectors';
 import { cardMedico } from '../model/enum/cardMedico';
+import { debug } from 'console';
 
 @Injectable({ providedIn: 'root' })
 export class CalendarioService {

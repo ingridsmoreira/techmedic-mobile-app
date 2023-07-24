@@ -10,7 +10,6 @@ import { selectNovasNotificacoes } from 'src/app/core/state/selectors/notificaco
   styleUrls: ['./footer-menu.component.sass'],
 })
 export class FooterMenuComponent {
-  userId = 1;
   temNovasNotificacoes = false;
 
   constructor(private router: Router, private store: Store) {

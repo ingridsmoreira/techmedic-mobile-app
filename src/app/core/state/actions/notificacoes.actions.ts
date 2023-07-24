@@ -4,6 +4,6 @@ import { Notificacoes } from '../../model/interfaces/notificacoes.interface';
 export const NotificacoesActions = createActionGroup({
   source: 'notificacoes',
   events: {
-    'Get Notificacoes': props<{ notificacoes: Notificacoes[] }>(),
+    'Get Notificacoes': props<{ notificacoes: ReadonlyArray<Notificacoes> }>(),
   },
 });

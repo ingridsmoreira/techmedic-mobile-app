@@ -5,6 +5,7 @@ import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
 import { User } from 'src/app/core/model/interfaces/user.interface';
 import { NotificacoesService } from 'src/app/core/services/notificacoes.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { NotificacoesActions } from 'src/app/core/state/actions/notificacoes.actions';
 import { selectNoticacoes } from 'src/app/core/state/selectors/notificacoes.selectors';
 import { selectUser } from 'src/app/core/state/selectors/user.selectors';
@@ -16,42 +17,62 @@ import { selectUser } from 'src/app/core/state/selectors/user.selectors';
 })
 export class NotificacoesComponent implements OnInit {
   notificacaoLoaded: Promise<boolean> = Promise.resolve(false);
-  userId = 0;
+  user?: User;
   notificacoes: Notificacoes[] = [];
 
   constructor(
     private notificacoesService: NotificacoesService,
+    private userService: UserService,
     private store: Store
   ) {
-    this.store.select(selectUser).subscribe((user: User) => {
-      if (user.id) {
-        this.userId = user.id;
-      } else {
-        // retorna welcome
-      }
-    });
+    this.store
+      .select(selectUser)
+      .pipe(take(1))
+      .subscribe((user: User) => {
+        if (user.id !== 0) {
+          this.user = user;
+          this.vizualizarNotificacoes();
+          return;
+        }
+        const userId = this.userService.checkSession();
+        if (userId) {
+          this.userService.getUser(userId).subscribe((user: User[]) => {
+            if (user.length > 0) {
+              this.user = user[0];
+              this.vizualizarNotificacoes();
+            }
+          });
+        }
+      });
   }
 
   ngOnInit(): void {
     this.store
       .select(selectNoticacoes)
-      .pipe(take(1))
       .subscribe((notificacoes: Notificacoes[]) => {
         this.notificacoes = notificacoes;
-        this.notificacoesService
-          .vizualiarNotificacoes(this.userId)
-          .subscribe((data) => {
-            this.store.dispatch(
-              NotificacoesActions.getNotificacoes({ notificacoes: data })
-            );
-            this.notificacaoLoaded = Promise.resolve(true);
-          });
+      });
+  }
+
+  vizualizarNotificacoes() {
+    if (!this.user || !this.user.id) {
+      console.error('Usuário não definido ou sem ID');
+      return;
+    }
+    this.notificacoesService
+      .vizualiarNotificacoes(this.user.id)
+      .subscribe((data) => {
+        this.store.dispatch(
+          NotificacoesActions.getNotificacoes({ notificacoes: data })
+        );
+        this.notificacaoLoaded = Promise.resolve(true);
       });
   }
 
   apagarNotificacoes() {
+    if (!this.user || !this.user.id) return;
     this.notificacoesService
-      .deleteNotificacoes(this.userId)
+      .deleteNotificacoes(this.user.id)
       .pipe(take(1))
       .subscribe((_data) => {
         this.store.dispatch(

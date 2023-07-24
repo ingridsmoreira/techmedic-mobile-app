@@ -1,14 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs';
+import { map, take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
+import { User } from 'src/app/core/model/interfaces/user.interface';
 import { CalendarioService } from 'src/app/core/services/calendario.service';
 import { NotificacoesService } from 'src/app/core/services/notificacoes.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { CalendarioActions } from 'src/app/core/state/actions/calendario.actions';
 import { NotificacoesActions } from 'src/app/core/state/actions/notificacoes.actions';
+import { selectUser } from 'src/app/core/state/selectors/user.selectors';
 import { Utils } from 'src/app/shared/utils/utils';
 
 export interface AgendaMedico {
@@ -33,7 +36,7 @@ export interface Horarios {
 })
 export class AgendaMedicoComponent implements OnInit {
   calendarioLoaded: Promise<boolean> = Promise.resolve(false);
-  userId = 1;
+  user?: User;
   @Input() medicoId: number = 0;
   calendarios: Calendario[] = [];
   agenda: AgendaMedico[] = [];
@@ -61,8 +64,27 @@ export class AgendaMedicoComponent implements OnInit {
     private utils: Utils,
     private router: Router,
     private store: Store,
-    private notificacoesService: NotificacoesService
-  ) {}
+    private notificacoesService: NotificacoesService,
+    private userService: UserService
+  ) {
+    this.store
+      .select(selectUser)
+      .pipe(take(1))
+      .subscribe((user: User) => {
+        if (user.id !== 0) {
+          this.user = user;
+          return;
+        }
+        const userId = this.userService.checkSession();
+        if (userId) {
+          this.userService.getUser(userId).subscribe((user: User[]) => {
+            if (user.length > 0) {
+              this.user = user[0];
+            }
+          });
+        }
+      });
+  }
 
   ngOnInit(): void {
     this.calendarioService
@@ -188,17 +210,12 @@ export class AgendaMedicoComponent implements OnInit {
 
   criarNotificacao(sucesso: boolean) {
     const msg = sucesso
-      ? 'Seu agendamento foi feito com sucesso para o dia ' +
-        this.diaSelecionado +
-        ' às ' +
-        this.horarioSelecionado +
-        '.'
+      ? 'Seu agendamento foi feito com sucesso para o dia '
       : 'Erro ao tentar agendar sua consulta';
     const icone = sucesso ? 'check_circle_outline' : 'error_outline';
     const dataString = this.gerarDataString();
-
     const novaNotificacao: Notificacoes = {
-      userId: this.userId,
+      userId: this.user?.id || 0,
       icone,
       mensagem: msg,
       vista: 0,
@@ -235,15 +252,15 @@ export class AgendaMedicoComponent implements OnInit {
   agendar() {
     const dataString = this.gerarDataString();
     const novoCalendario: Calendario = {
-      userId: this.userId,
+      userId: this.user?.id || 0,
       medicoId: this.medicoId,
       data: dataString,
     };
     this.calendarioService
       .criarCalendario(novoCalendario)
-      .subscribe((calendario) => {
+      .subscribe((calendarios) => {
         this.store.dispatch(
-          CalendarioActions.getUserCalendario({ calendario })
+          CalendarioActions.getUserCalendario({ calendarios })
         );
         this.criarNotificacao(true);
       });

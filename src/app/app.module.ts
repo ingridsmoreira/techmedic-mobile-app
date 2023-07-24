@@ -8,6 +8,7 @@ import { FeaturesModule } from './features/features.module';
 import { LibModule } from './lib/lib.module';
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { StateModule } from './core/state/state.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,9 @@ import { StateModule } from './core/state/state.module';
     FeaturesModule,
     LibModule,
     StateModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+    }),
   ],
   providers: [Calendar],
   bootstrap: [AppComponent],

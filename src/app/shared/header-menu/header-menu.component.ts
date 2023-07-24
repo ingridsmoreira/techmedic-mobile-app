@@ -3,10 +3,19 @@ import { Store } from '@ngrx/store';
 import { take } from 'rxjs';
 import { Notificacoes } from 'src/app/core/model/interfaces/notificacoes.interface';
 import { User } from 'src/app/core/model/interfaces/user.interface';
+import { CalendarioService } from 'src/app/core/services/calendario.service';
+import { MedicoService } from 'src/app/core/services/medico.service';
 import { NotificacoesService } from 'src/app/core/services/notificacoes.service';
 import { UserService } from 'src/app/core/services/user.service';
+import { CalendarioActions } from 'src/app/core/state/actions/calendario.actions';
+import { MedicoActions } from 'src/app/core/state/actions/medico.actions';
 import { NotificacoesActions } from 'src/app/core/state/actions/notificacoes.actions';
-import { selectNovasNotificacoes } from 'src/app/core/state/selectors/notificacoes.selectors';
+import { selectCalendario } from 'src/app/core/state/selectors/calendario.selectors';
+import { selectMedico } from 'src/app/core/state/selectors/medico.selectors';
+import {
+  selectNoticacoes,
+  selectNovasNotificacoes,
+} from 'src/app/core/state/selectors/notificacoes.selectors';
 import { selectUser } from 'src/app/core/state/selectors/user.selectors';
 
 @Component({
@@ -22,30 +31,26 @@ export class HeaderMenuComponent {
   constructor(
     private store: Store,
     private notificacoesService: NotificacoesService,
-    private userService: UserService
+    private userService: UserService,
+    private medicoService: MedicoService,
+    private calendarioService: CalendarioService
   ) {
-    this.store
-      .select(selectUser)
-      .pipe(take(1))
-      .subscribe((user) => {
-        if (user?.id) {
-          this.user = user;
-          this.checarNotificacoes();
-        } else {
-          const userId = sessionStorage.getItem('userId');
-          if (userId) {
-            this.userService
-              .getUser(Number(userId))
-              .pipe(take(1))
-              .subscribe((user: User[]) => {
-                this.user = user[0];
-                this.checarNotificacoes();
-              });
-          } else {
-            // retorna welcome
+    this.store.select(selectUser).subscribe((user: User) => {
+      if (user.id !== 0) {
+        this.user = user;
+        this.popularDados();
+        return;
+      }
+      const userId = this.userService.checkSession();
+      if (userId) {
+        this.userService.getUser(userId).subscribe((user: User[]) => {
+          if (user.length > 0) {
+            this.user = user[0];
+            this.popularDados();
           }
-        }
-      });
+        });
+      }
+    });
     this.store
       .select(selectNovasNotificacoes)
       .subscribe((notificacoes: Notificacoes[]) => {
@@ -53,8 +58,9 @@ export class HeaderMenuComponent {
       });
   }
 
-  checarNotificacoes() {
+  popularDados() {
     if (this.user?.id) {
+      // notificacoes
       this.notificacoesService
         .getNotificacoes(this.user.id)
         .pipe(take(1))
@@ -63,6 +69,40 @@ export class HeaderMenuComponent {
             NotificacoesActions.getNotificacoes({ notificacoes })
           );
         });
+      // medicos
+      this.store
+        .select(selectMedico)
+        .pipe(take(5))
+        .subscribe((medicos) => {
+          if (medicos.length === 0) {
+            this.medicoService.getAllMedicos().subscribe((medicos) => {
+              this.store.dispatch(MedicoActions.getMedicos({ medicos }));
+            });
+          }
+        });
+      // calendario
+      this.store
+        .select(selectCalendario)
+        .pipe(take(5))
+        .subscribe((calendario) => {
+          if (calendario.length === 0 && this.user?.id) {
+            this.calendarioService
+              .getCalendarioUser(this.user.id)
+              .subscribe((calendarios) => {
+                this.store.dispatch(
+                  CalendarioActions.getUserCalendario({ calendarios })
+                );
+              });
+          }
+        });
+    }
+  }
+
+  imagemUsuario(): string {
+    if (this.user && this.user.photoUrl && this.user.photoUrl !== '') {
+      return this.user.photoUrl;
+    } else {
+      return '/assets/images/icons/user-no-img.svg';
     }
   }
 

@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
         .loginUser(this.loginForm.value)
         .pipe(take(1))
         .subscribe((user: User[]) => {
-          debugger;
           if (
             user[0] !== undefined &&
             user[0].id !== undefined &&
