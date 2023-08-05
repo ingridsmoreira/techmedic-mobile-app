@@ -2,7 +2,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 export const apiConstants = {
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://recipecrafters.com/index.php',
+  // apiUrl: 'http://localhost:3000/index.php',
   httpOptions: {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',

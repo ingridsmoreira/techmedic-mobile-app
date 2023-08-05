@@ -13,6 +13,7 @@ import { ObrigadoModule } from './obrigado/obrigado.module';
 import { CalendarioAgendadoModule } from './calendario-agendado/calendario-agendado.module';
 import { UsuarioModule } from './usuario/usuario.module';
 import { CadastroModule } from './cadastro/cadastro.module';
+import { WhatsappModule } from './whatsapp/whatsapp.module';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { CadastroModule } from './cadastro/cadastro.module';
     CalendarioAgendadoModule,
     UsuarioModule,
     CadastroModule,
+    WhatsappModule,
   ],
 })
 export class FeaturesModule {}

@@ -20,6 +20,19 @@
         formControlName="senha"
       ></app-input-field>
     </div>
+    <div class="input">
+      <label for="foto" class="custom-file-upload">
+        <mat-icon class="icone">camera_alt</mat-icon> Adicione foto de Perfil
+      </label>
+      <input
+        type="file"
+        name="foto"
+        id="foto"
+        (change)="onFotoSelected($event)"
+      />
+    </div>
+    <input type="hidden" formControlName="file" />
+    <input type="hidden" formControlName="fileName" />
     <app-button
       [text]="submitName"
       type="submit"

@@ -1,0 +1,15 @@
+<div class="proximas-consultas-wrapper">
+  <h3>Entre em contato com Medico(a)</h3>
+  <div *ngFor="let cardMedico of consultas" class="consultas">
+    <app-card-medico
+      [cardMedico]="cardMedico"
+      tipo="whatsapp"
+    ></app-card-medico>
+  </div>
+  <div *ngIf="consultas.length === 0" class="no-consultas">
+    <h4>
+      Nāo existem consultas anteriores ou futuras para entrar em contato com o
+      medico
+    </h4>
+  </div>
+</div>

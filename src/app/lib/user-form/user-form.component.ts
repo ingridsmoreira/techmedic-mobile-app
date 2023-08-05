@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { firstValueFrom, take } from 'rxjs';
-import { RestApiService } from 'src/app/core/data/rest-api.service';
+import { ReplaySubject, take } from 'rxjs';
 import { User } from 'src/app/core/model/interfaces/user.interface';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserActions } from 'src/app/core/state/actions/user.actions';
@@ -54,8 +53,30 @@ export class UserFormComponent implements OnInit {
       nome: ['', Validators.required],
       email: ['', Validators.required],
       numero: ['', Validators.required],
+      foto: [''],
+      file: [''],
+      fileName: [''],
       senha: [''],
     });
+  }
+
+  onFotoSelected(event: any) {
+    this.convertFile(event.target.files[0]).subscribe((base64) => {
+      this.userForm.controls['file'].setValue(base64);
+      this.userForm.controls['fileName'].setValue(event.target.files[0].name);
+    });
+  }
+
+  convertFile(file: File) {
+    console.log(file);
+    const result = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (event) =>
+      event.target && event.target.result
+        ? result.next(btoa(event.target.result.toString()))
+        : result.next('');
+    return result;
   }
 
   onSubmit() {

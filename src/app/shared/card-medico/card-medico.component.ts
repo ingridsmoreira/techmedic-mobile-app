@@ -23,6 +23,7 @@ export class CardMedicoComponent {
     calendarioId: 1,
   };
   @Input() cardMedico: CardMedico = this.dummyCardMedico as CardMedico;
+  @Input() tipo = 'normal';
 
   constructor(private router: Router, private utils: Utils) {}
 

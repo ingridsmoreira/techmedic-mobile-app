@@ -83,6 +83,7 @@ export class CalendarioService {
               especialidade: medico.especialidade,
               data: calendario.data,
               photoUrl: medico.photoUrl,
+              telefone: medico.telefone,
               tipo: cardMedico.calendario,
             };
             cards.push(card);
@@ -103,6 +104,11 @@ export class CalendarioService {
     } else if (tipo === 'futuro') {
       return cards.filter((card) =>
         card.data ? new Date(card.data.toString()) > now : false
+      );
+    } else if (tipo === 'todas') {
+      return cards.filter(
+        (card, index, self) =>
+          index === self.findIndex((o) => o.medicoId === card.medicoId)
       );
     } else {
       return [];

@@ -30,6 +30,16 @@
 		<array>
 			<string>armv7</string>
 		</array>
+		<key>NSCalendarsUsageDescription</key>
+		<string>$CALENDAR_USAGE_DESCRIPTION</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Uso de camera para foto de perfil</string>
+		<key>NSContactsUsageDescription</key>
+		<string>$CONTACTS_USAGE_DESCRIPTION</string>
+		<key>NSPhotoLibraryAddUsageDescription</key>
+		<string>Uso de adicionar foto a galeria para foto de perfil</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Uso de galeria para foto de perfil</string>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>

@@ -8,6 +8,7 @@ export interface Medico {
   especialidade: Especialidades;
   photoUrl: string;
   sexo: string;
+  telefone?: string;
 }
 
 export interface CardMedico {
@@ -18,5 +19,6 @@ export interface CardMedico {
   especialidade: Especialidades;
   photoUrl: string;
   data?: string;
+  telefone?: string;
   tipo: cardMedico;
 }

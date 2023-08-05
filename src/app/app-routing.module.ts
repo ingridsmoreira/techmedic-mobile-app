@@ -13,6 +13,7 @@ import { ObrigadoComponent } from './features/obrigado/obrigado.component';
 import { CalendarioAgendadoComponent } from './features/calendario-agendado/calendario-agendado.component';
 import { UsuarioComponent } from './features/usuario/usuario.component';
 import { CadastroComponent } from './features/cadastro/cadastro.component';
+import { WhatsappComponent } from './features/whatsapp/whatsapp.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/splash', pathMatch: 'full' },
@@ -77,6 +78,11 @@ const routes: Routes = [
   {
     path: 'usuario',
     component: UsuarioComponent,
+  },
+  {
+    path: 'whatsapp',
+    component: WhatsappComponent,
+    pathMatch: 'full',
   },
 ];
 

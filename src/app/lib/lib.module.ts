@@ -9,6 +9,7 @@ import { AgendaMedicoModule } from './agenda-medico/agenda-medico.module';
 import { UserFormModule } from './user-form/user-form.module';
 import { CadastroComponent } from './cadastro/cadastro.component';
 import { CadastroModule } from './cadastro/cadastro.module';
+import { WhatsappConsultasModule } from './whatsapp-consultas/whatsapp-consultas.module';
 
 @NgModule({
   declarations: [],
@@ -22,6 +23,7 @@ import { CadastroModule } from './cadastro/cadastro.module';
     AgendaMedicoModule,
     UserFormModule,
     CadastroModule,
+    WhatsappConsultasModule,
   ],
   exports: [
     LoginLibModule,
@@ -32,6 +34,7 @@ import { CadastroModule } from './cadastro/cadastro.module';
     AgendaMedicoModule,
     UserFormModule,
     CadastroModule,
+    WhatsappConsultasModule,
   ],
 })
 export class LibModule {}
