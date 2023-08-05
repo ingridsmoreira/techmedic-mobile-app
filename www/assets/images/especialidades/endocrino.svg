@@ -1,0 +1,41 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="24" cy="24" r="24" fill="url(#paint0_linear_0_1)" />
+    <path
+        d="M22.6251 20.1875L24.4584 23.0625L22.6251 25.9375H19.8751L18.0417 23.0625L19.8751 20.1875H22.6251Z"
+        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path
+        d="M27.2083 17.3125L29.0417 20.1875L27.2083 23.0625H24.4583L22.625 20.1875L24.4583 17.3125H27.2083Z"
+        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M27.2083 28.8125L29.0416 31.6875" stroke="white" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.0417 17.3125L19.8751 20.1875" stroke="white" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M24.4584 28.8125L23.5417 30.25" stroke="white" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path d="M19.8749 25.9375L18.9583 27.375" stroke="white" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path d="M18.0417 23.0625H17.125" stroke="white" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path d="M29.0417 25.9375H31.7917" stroke="white" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    <path
+        d="M27.2083 23.0625L29.0417 25.9375L27.2083 28.8125H24.4583L22.625 25.9375L24.4583 23.0625H27.2083Z"
+        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path
+        d="M22.6251 32.1666C22.8782 32.1666 23.0834 31.9521 23.0834 31.6875C23.0834 31.4228 22.8782 31.2083 22.6251 31.2083C22.372 31.2083 22.1667 31.4228 22.1667 31.6875C22.1667 31.9521 22.372 32.1666 22.6251 32.1666Z"
+        fill="white" />
+    <path
+        d="M18.0416 29.2916C18.2947 29.2916 18.4999 29.0771 18.4999 28.8125C18.4999 28.5478 18.2947 28.3333 18.0416 28.3333C17.7885 28.3333 17.5833 28.5478 17.5833 28.8125C17.5833 29.0771 17.7885 29.2916 18.0416 29.2916Z"
+        fill="white" />
+    <path
+        d="M15.2916 23.5416C15.5447 23.5416 15.7499 23.3271 15.7499 23.0625C15.7499 22.7978 15.5447 22.5833 15.2916 22.5833C15.0385 22.5833 14.8333 22.7978 14.8333 23.0625C14.8333 23.3271 15.0385 23.5416 15.2916 23.5416Z"
+        fill="white" />
+    <defs>
+        <linearGradient id="paint0_linear_0_1" x1="24" y1="0" x2="24" y2="48"
+            gradientUnits="userSpaceOnUse">
+            <stop />
+            <stop offset="1" stop-color="#F2CCC4" />
+        </linearGradient>
+    </defs>
+</svg>
+    

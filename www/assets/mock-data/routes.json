@@ -1,0 +1,7 @@
+{
+  "/api/*": "/$1",
+  "/calendario/medico/:medicoId": "/calendarios?medicoId=:medicoId",
+  "/calendario/user/:userId": "/calendarios?userId=:userId",
+  "/notificacoes/user/:userId": "/notificacoes?userId=:userId",
+  "/busca/medico/:especialidade": "/medico?especialidade=:especialidade"
+}
