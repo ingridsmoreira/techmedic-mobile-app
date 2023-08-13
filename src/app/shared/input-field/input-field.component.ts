@@ -36,6 +36,7 @@ export class InputFieldComponent implements ControlValueAccessor {
   @Input() icon: string = '';
   @Input() iconFrente: boolean = true;
   @Input() isRedondo: boolean = false;
+  @Input() isLowerCase: boolean = false;
   touched = false;
   disabled = false;
 

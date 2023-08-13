@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   loginSucess: boolean = false;
   @Output() onLoginEvent = new EventEmitter<boolean>();
+  isLowerCase: boolean = true;
 
   constructor(
     private fb: FormBuilder,

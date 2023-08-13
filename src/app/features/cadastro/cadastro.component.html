@@ -1,9 +1,11 @@
 <div class="cadastro-container">
   <app-back-btn></app-back-btn>
   <h1>Faça seu cadastro</h1>
-  <app-core-cadastro
-    (onCadastroEvent)="onTentarCadastro($event)"
-  ></app-core-cadastro>
+  <div class="cadastro-form">
+    <app-core-cadastro
+      (onCadastroEvent)="onTentarCadastro($event)"
+    ></app-core-cadastro>
+  </div>
   <div class="outra-opcao">
     <app-button
       text="Já tem uma conta? Acesse aqui."

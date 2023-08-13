@@ -1,7 +1,9 @@
 <div class="login-container">
   <app-back-btn></app-back-btn>
   <h1>Bem-vindo(a) de volta!</h1>
-  <app-core-login (onLoginEvent)="onLoginClick($event)"></app-core-login>
+  <div class="login-form">
+    <app-core-login (onLoginEvent)="onLoginClick($event)"></app-core-login>
+  </div>
   <div class="outra-opcao">
     <app-button
       text="Não tem uma conta? Inscrever-se"

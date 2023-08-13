@@ -4,7 +4,11 @@
       <app-input-field label="Nome" formControlName="nome"></app-input-field>
     </div>
     <div class="input">
-      <app-input-field label="E-mail" formControlName="email"></app-input-field>
+      <app-input-field
+        label="E-mail"
+        formControlName="email"
+        [isLowerCase]="true"
+      ></app-input-field>
     </div>
     <div class="input">
       <app-input-field

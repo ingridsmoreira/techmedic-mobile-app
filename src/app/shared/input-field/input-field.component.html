@@ -13,6 +13,11 @@
     [value]="value"
     (input)="onInput($event)"
     (blur)="onTouched()"
+    (keyup)="
+      isLowerCase
+        ? (this.value = this.value.toLowerCase())
+        : (this.value = this.value)
+    "
   />
   <mat-icon matSuffix *ngIf="icon && !iconFrente">{{ icon }}</mat-icon>
 </mat-form-field>
