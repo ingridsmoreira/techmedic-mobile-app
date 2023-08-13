@@ -27,7 +27,7 @@ export class NotificacoesComponent implements OnInit {
   ) {
     this.store
       .select(selectUser)
-      .pipe(take(1))
+      .pipe(take(5))
       .subscribe((user: User) => {
         if (user.id !== 0) {
           this.user = user;
@@ -49,7 +49,18 @@ export class NotificacoesComponent implements OnInit {
   ngOnInit(): void {
     this.store
       .select(selectNoticacoes)
+      .pipe(take(5))
       .subscribe((notificacoes: Notificacoes[]) => {
+        if (notificacoes.length === 0 && this.user?.id) {
+          this.notificacoesService
+            .getNotificacoes(this.user?.id)
+            .pipe(take(5))
+            .subscribe((data) => {
+              this.store.dispatch(
+                NotificacoesActions.getNotificacoes({ notificacoes: data })
+              );
+            });
+        }
         this.notificacoes = notificacoes;
       });
   }
@@ -73,7 +84,6 @@ export class NotificacoesComponent implements OnInit {
     if (!this.user || !this.user.id) return;
     this.notificacoesService
       .deleteNotificacoes(this.user.id)
-      .pipe(take(1))
       .subscribe((_data) => {
         this.store.dispatch(
           NotificacoesActions.getNotificacoes({ notificacoes: [] })

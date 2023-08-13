@@ -69,7 +69,7 @@ export class AgendaMedicoComponent implements OnInit {
   ) {
     this.store
       .select(selectUser)
-      .pipe(take(1))
+      .pipe(take(5))
       .subscribe((user: User) => {
         if (user.id !== 0) {
           this.user = user;

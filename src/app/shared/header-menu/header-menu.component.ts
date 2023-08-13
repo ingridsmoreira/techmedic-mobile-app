@@ -63,7 +63,7 @@ export class HeaderMenuComponent {
       // notificacoes
       this.notificacoesService
         .getNotificacoes(this.user.id)
-        .pipe(take(1))
+        .pipe(take(5))
         .subscribe((notificacoes: Notificacoes[]) => {
           this.store.dispatch(
             NotificacoesActions.getNotificacoes({ notificacoes })
@@ -85,12 +85,27 @@ export class HeaderMenuComponent {
         .select(selectCalendario)
         .pipe(take(5))
         .subscribe((calendario) => {
-          if (calendario.length === 0 && this.user?.id) {
+          if (this.user?.id) {
             this.calendarioService
               .getCalendarioUser(this.user.id)
               .subscribe((calendarios) => {
                 this.store.dispatch(
                   CalendarioActions.getUserCalendario({ calendarios })
+                );
+              });
+          }
+        });
+      // notificacoes
+      this.store
+        .select(selectNoticacoes)
+        .pipe(take(5))
+        .subscribe((notificacoes) => {
+          if (this.user?.id) {
+            this.notificacoesService
+              .getNotificacoes(this.user.id)
+              .subscribe((notificacoes) => {
+                this.store.dispatch(
+                  NotificacoesActions.getNotificacoes({ notificacoes })
                 );
               });
           }

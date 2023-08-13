@@ -48,7 +48,7 @@ export class CalendarioAgendadoComponent {
   getDadosMedicos(medicoId: number) {
     this.store
       .select(selectMedico)
-      .pipe(take(1))
+      .pipe(take(5))
       .subscribe((medicos) => {
         this.medico = medicos.filter((med) => med.id === medicoId)[0];
         this.medicoLoaded = Promise.resolve(true);
@@ -111,12 +111,12 @@ export class CalendarioAgendadoComponent {
 
     dialogRef
       .afterClosed()
-      .pipe(take(1))
+      .pipe(take(5))
       .subscribe((result) => {
         if (result) {
           this.calendarioService
             .deleteCalendario(this.idCalendario)
-            .pipe(take(1))
+            .pipe(take(5))
             .subscribe((calendarios) => {
               this.store.dispatch(
                 CalendarioActions.getUserCalendario({ calendarios })
