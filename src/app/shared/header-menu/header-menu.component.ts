@@ -35,22 +35,28 @@ export class HeaderMenuComponent {
     private medicoService: MedicoService,
     private calendarioService: CalendarioService
   ) {
-    this.store.select(selectUser).subscribe((user: User) => {
-      if (user.id !== 0) {
-        this.user = user;
-        this.popularDados();
-        return;
-      }
-      const userId = this.userService.checkSession();
-      if (userId) {
-        this.userService.getUser(userId).subscribe((user: User[]) => {
-          if (user.length > 0) {
-            this.user = user[0];
-            this.popularDados();
-          }
-        });
-      }
-    });
+    this.store
+      .select(selectUser)
+      .pipe(take(2))
+      .subscribe((user: User) => {
+        if (user.id !== 0) {
+          this.user = user;
+          this.popularDados();
+          return;
+        }
+        const userId = this.userService.checkSession();
+        if (userId) {
+          this.userService
+            .getUser(userId)
+            .pipe(take(1))
+            .subscribe((user: User[]) => {
+              if (user.length > 0) {
+                this.user = user[0];
+                this.popularDados();
+              }
+            });
+        }
+      });
     this.store
       .select(selectNovasNotificacoes)
       .subscribe((notificacoes: Notificacoes[]) => {
@@ -63,7 +69,7 @@ export class HeaderMenuComponent {
       // notificacoes
       this.notificacoesService
         .getNotificacoes(this.user.id)
-        .pipe(take(5))
+        .pipe(take(3))
         .subscribe((notificacoes: Notificacoes[]) => {
           this.store.dispatch(
             NotificacoesActions.getNotificacoes({ notificacoes })
@@ -72,19 +78,23 @@ export class HeaderMenuComponent {
       // medicos
       this.store
         .select(selectMedico)
-        .pipe(take(5))
+        .pipe(take(1))
         .subscribe((medicos) => {
           if (medicos.length === 0) {
-            this.medicoService.getAllMedicos().subscribe((medicos) => {
-              this.store.dispatch(MedicoActions.getMedicos({ medicos }));
-            });
+            this.medicoService
+              .getAllMedicos()
+              .pipe(take(1))
+              .subscribe((medicos) => {
+                console.log(medicos);
+                this.store.dispatch(MedicoActions.getMedicos({ medicos }));
+              });
           }
         });
       // calendario
       this.store
         .select(selectCalendario)
-        .pipe(take(5))
-        .subscribe((calendario) => {
+        .pipe(take(3))
+        .subscribe((_calendario) => {
           if (this.user?.id) {
             this.calendarioService
               .getCalendarioUser(this.user.id)
@@ -98,8 +108,8 @@ export class HeaderMenuComponent {
       // notificacoes
       this.store
         .select(selectNoticacoes)
-        .pipe(take(5))
-        .subscribe((notificacoes) => {
+        .pipe(take(3))
+        .subscribe((_notificacoes) => {
           if (this.user?.id) {
             this.notificacoesService
               .getNotificacoes(this.user.id)

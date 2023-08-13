@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ReplaySubject, take } from 'rxjs';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { User } from 'src/app/core/model/interfaces/user.interface';
 import { UserService } from 'src/app/core/services/user.service';
 import { UserActions } from 'src/app/core/state/actions/user.actions';
@@ -65,6 +66,24 @@ export class UserFormComponent implements OnInit {
       this.userForm.controls['file'].setValue(base64);
       this.userForm.controls['fileName'].setValue(event.target.files[0].name);
     });
+  }
+
+  async tirarFoto() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: false,
+      resultType: CameraResultType.Base64,
+      source: CameraSource.Camera,
+    });
+    console.log(image);
+    this.userForm.controls['file'].setValue(image.base64String);
+    this.userForm.controls['fileName'].setValue('avatarUsuario.jpg');
+  }
+
+  fotoLbl() {
+    return this.userForm.controls['file'].value
+      ? 'Selecione outra foto'
+      : 'Adicione uma foto de Perfil';
   }
 
   convertFile(file: File) {
