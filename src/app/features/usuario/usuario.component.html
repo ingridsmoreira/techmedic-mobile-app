@@ -3,7 +3,9 @@
     <app-header-menu></app-header-menu>
   </div>
   <div class="content-wrapper">
-    <app-user-form></app-user-form>
+    <app-user-form
+      (onFormSuccessEvent)="formularioSubmetido($event)"
+    ></app-user-form>
   </div>
   <div class="footer-wrapper">
     <app-footer-menu></app-footer-menu>

@@ -28,10 +28,10 @@ export class UserService {
       .pipe(map((user) => user || []));
   }
 
-  updateUser(user: User): Observable<User> {
+  updateUser(user: User): Observable<User[]> {
     return this.http
-      .put<User>(apiConstants.apiUrl + '/user/update', JSON.stringify(user))
-      .pipe(map((user) => user || null));
+      .put<User[]>(apiConstants.apiUrl + '/user/update', JSON.stringify(user))
+      .pipe(map((user) => user || []));
   }
 
   checkSession(): number | undefined {

@@ -101,11 +101,14 @@ export class UserFormComponent implements OnInit {
   onSubmit() {
     if (this.userForm.valid) {
       if (this.tipo === 'editar') {
-        this.userService.updateUser(this.userForm.value).subscribe((user) => {
-          console.log(user);
-          this.formSucess = true;
-          this.onFormSuccessEvent.emit(this.formSucess);
-        });
+        this.userService
+          .updateUser(this.userForm.value)
+          .subscribe((user: User[]) => {
+            console.log(user);
+            this.store.dispatch(UserActions.updateUser({ user: user[0] }));
+            this.formSucess = true;
+            this.onFormSuccessEvent.emit(this.formSucess);
+          });
       }
     }
   }
