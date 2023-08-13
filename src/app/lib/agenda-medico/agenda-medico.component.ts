@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { debug } from 'console';
 import { map, take } from 'rxjs';
 import { RestApiService } from 'src/app/core/data/rest-api.service';
 import { Calendario } from 'src/app/core/model/interfaces/calendario.interface';
@@ -210,7 +211,10 @@ export class AgendaMedicoComponent implements OnInit {
 
   criarNotificacao(sucesso: boolean) {
     const msg = sucesso
-      ? 'Seu agendamento foi feito com sucesso para o dia '
+      ? 'Seu agendamento foi feito com sucesso para o dia ' +
+        this.diaSelecionado +
+        ' às ' +
+        this.horarioSelecionado
       : 'Erro ao tentar agendar sua consulta';
     const icone = sucesso ? 'check_circle_outline' : 'error_outline';
     const dataString = this.gerarDataString();
@@ -221,6 +225,7 @@ export class AgendaMedicoComponent implements OnInit {
       vista: 0,
       data: dataString,
     };
+    debugger;
     this.notificacoesService
       .createNotificacoes(novaNotificacao)
       .subscribe((resNotificacao: Notificacoes[]) => {
@@ -236,6 +241,7 @@ export class AgendaMedicoComponent implements OnInit {
   }
 
   gerarDataString(): string {
+    debugger;
     const dataArray = this.diaSelecionado.split('/');
     const dataString =
       '20' +
